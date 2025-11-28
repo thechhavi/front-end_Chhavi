@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 12: Welcome Message</title>
+  <style>
+    /* Basic styling to make it look nice */
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .instruction {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 5px solid #667eea;
+      text-align: left;
+    }
+
+    .instruction h3 {
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+
+    .instruction p {
+      color: #555;
+      line-height: 1.6;
+      margin: 5px 0;
+    }
+
+    .instruction code {
+      background-color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #e74c3c;
+      font-family: 'Courier New', monospace;
+    }
+
+    button {
+      background-color: #667eea;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #5568d3;
+    }
+
+    #output {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #e8f4f8;
+      border-radius: 10px;
+      min-height: 50px;
+      color: #2c3e50;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>👋 Task 12: Welcome Message Script</h1>
+    
+    <!-- Explanation Box -->
+    <div class="instruction">
+      <h3>📚 What This Does:</h3>
+      <p><strong>1.</strong> <code>prompt()</code> - Shows a popup where you can type</p>
+      <p><strong>2.</strong> <code>alert()</code> - Shows a popup message</p>
+      <p><strong>3.</strong> <code>document.getElementById()</code> - Displays message on webpage</p>
+      <p style="margin-top: 15px;">Click the button below to start! ⬇️</p>
+    </div>
+
+    <!-- Button to trigger the script -->
+    <button onclick="runWelcomeScript()">🚀 Run Welcome Script</button>
+
+    <!-- Output area where message will appear -->
+    <div id="output"></div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- JAVASCRIPT CODE STARTS HERE -->
+  <!-- ============================================ -->
+  <script>
+    /* ============================================
+       JAVASCRIPT INPUT/OUTPUT METHODS EXPLAINED:
+       
+       1. prompt() - Gets INPUT from user
+          - Shows a popup box with text field
+          - User types something and clicks OK
+          - Returns what the user typed as a STRING
+          
+       2. alert() - Shows OUTPUT to user
+          - Shows a popup box with a message
+          - User can only click OK
+          - Doesn't return anything
+          
+       3. document.getElementById() - Modifies webpage
+          - Finds an HTML element by its ID
+          - Can change its content, style, etc.
+       ============================================ */
+
+    // FUNCTION: This is like a recipe - a set of instructions we can run anytime
+    function runWelcomeScript() {
+      
+      // STEP 1: Get user's name using prompt()
+      // prompt() has 2 parts:
+      // - First part: The question/message shown to user
+      // - Second part (optional): Default text in the input box
+      let userName = prompt("What is your name?", "");
+      
+      /* EXPLANATION OF ABOVE LINE:
+         - "let" creates a variable (a container to store data)
+         - "userName" is the variable name (you can name it anything)
+         - "=" assigns the value
+         - prompt() shows the popup and gets user input
+         - Whatever user types gets stored in userName variable
+      */
+
+      // STEP 2: Check if user entered something
+      // If user clicks "Cancel" or leaves it empty, don't proceed
+      if (userName === null || userName === "") {
+        // === means "exactly equal to"
+        // || means "OR"
+        // This checks: if userName is null OR empty string
+        
+        alert("You didn't enter a name! Please try again.");
+        return; // "return" stops the function here
+      }
+
+      // STEP 3: Create the welcome message
+      // We combine (concatenate) strings using the + operator
+      let welcomeMessage = "Hello, " + userName + "! Welcome to JavaScript! 🎉";
+      
+      /* EXPLANATION:
+         - "Hello, " is a string (text)
+         - + userName adds the user's name
+         - + "! Welcome..." adds more text
+         - All combined into one message
+      */
+
+      // STEP 4: Show message in alert popup
+      alert(welcomeMessage);
+      
+      /* EXPLANATION:
+         alert() displays the message in a popup box
+         User sees it and clicks OK
+      */
+
+      // STEP 5: Display message on the webpage
+      // Find the element with id="output"
+      let outputElement = document.getElementById("output");
+      
+      // Change the content inside that element
+      outputElement.innerHTML = welcomeMessage;
+      
+      /* EXPLANATION:
+         - document is the entire webpage
+         - getElementById("output") finds the element with id="output"
+         - innerHTML changes what's inside that element
+         - We set it to our welcomeMessage
+      */
+
+      // BONUS: Let's also log it to the console (for developers)
+      console.log("User's name:", userName);
+      console.log("Welcome message:", welcomeMessage);
+      
+      /* EXPLANATION:
+         console.log() prints messages to browser's developer console
+         Press F12 to see the console (great for debugging!)
+      */
+    }
+
+    /* ============================================
+       KEY CONCEPTS SUMMARY:
+       
+       VARIABLES:
+       - let userName = "John"; // Creates a variable
+       - Variables store data (numbers, text, etc.)
+       - Think of them as labeled boxes
+       
+       STRINGS:
+       - Text wrapped in quotes: "Hello" or 'Hello'
+       - Can combine with +: "Hello" + " " + "World"
+       
+       FUNCTIONS:
+       - function doSomething() { ... }
+       - Reusable blocks of code
+       - Run when called: doSomething()
+       
+       IF STATEMENT:
+       - if (condition) { do this }
+       - Only runs code if condition is true
+       
+       COMMENTS:
+       - // Single line comment
+       - /* Multi-line comment */
+    /* ============================================ */
+  </script>
+
+  <!-- ============================================ -->
+  <!-- ADDITIONAL EXPLANATION SECTION -->
+  <!-- ============================================ -->
+  <div class="container" style="margin-top: 20px;">
+    <div class="instruction">
+      <h3>🎯 How It Works:</h3>
+      <p><strong>Step 1:</strong> Click the button above</p>
+      <p><strong>Step 2:</strong> A popup appears asking for your name</p>
+      <p><strong>Step 3:</strong> Type your name and click OK</p>
+      <p><strong>Step 4:</strong> An alert shows your welcome message</p>
+      <p><strong>Step 5:</strong> The message also appears on the page below the button</p>
+      
+      <h3 style="margin-top: 20px;">💡 Pro Tips:</h3>
+      <p>• Press <strong>F12</strong> to open Developer Console and see console.log() messages</p>
+      <p>• Try clicking Cancel in the prompt to see the error handling</p>
+      <p>• Try entering different names to see it work multiple times</p>
+    </div>
+  </div>
+
+</body>
+</html>

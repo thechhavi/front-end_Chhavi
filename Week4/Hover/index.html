@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 10: Navigation Hover Transitions</title>
+  <style>
+    /* ============================================ */
+    /* CSS TRANSITIONS EXPLAINED:
+    /* 
+    /* Transitions make changes smooth instead of instant.
+    /* When you hover over an element, properties change
+    /* smoothly over time instead of jumping immediately.
+    /* 
+    /* Basic syntax:
+    /* transition: property duration timing-function delay;
+    /* 
+    /* Examples:
+    /* transition: all 0.3s ease;
+    /* transition: background-color 0.5s, color 0.3s;
+    /* ============================================ */
+
+    /* RESET - Remove default spacing */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* BODY - Page setup */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    /* CONTAINER - Holds everything */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* PAGE TITLE */
+    .page-title {
+      text-align: center;
+      color: white;
+      margin-bottom: 50px;
+      font-size: 36px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ============================================ */
+    /* NAVIGATION BAR - Main container
+    /* ============================================ */
+    .navbar {
+      background-color: white;
+      border-radius: 50px; /* Very rounded corners */
+      padding: 15px 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      margin-bottom: 40px;
+    }
+
+    /* NAVIGATION LIST */
+    .nav-list {
+      list-style: none; /* Removes bullet points */
+      display: flex; /* Makes items sit side by side */
+      justify-content: center; /* Centers items */
+      gap: 10px; /* Space between items */
+      flex-wrap: wrap; /* Wraps on small screens */
+    }
+
+    /* ============================================ */
+    /* NAVIGATION LINKS - Individual menu items
+    /* This is where the TRANSITION magic happens!
+    /* ============================================ */
+    .nav-link {
+      /* Remove default link styling */
+      text-decoration: none;
+      color: #2c3e50; /* Dark gray text */
+      
+      /* Spacing and size */
+      padding: 12px 25px;
+      
+      /* Make it a block so padding works properly */
+      display: inline-block;
+      
+      /* Rounded corners */
+      border-radius: 25px;
+      
+      /* Font styling */
+      font-weight: 600;
+      font-size: 16px;
+      
+      /* Starting background (transparent) */
+      background-color: transparent;
+      
+      /* TRANSITION PROPERTY - This makes changes smooth!
+         Format: transition: what-to-animate duration timing-function;
+         
+         "all" means animate ALL properties that change
+         "0.3s" means animation takes 0.3 seconds
+         "ease" means smooth acceleration/deceleration */
+      transition: all 0.3s ease;
+      
+      /* Border for extra effect */
+      border: 2px solid transparent;
+    }
+
+    /* ============================================ */
+    /* HOVER STATE - What happens when you hover
+    /* All these changes happen SMOOTHLY because of transition!
+    /* ============================================ */
+    .nav-link:hover {
+      /* Change background color */
+      background-color: #667eea; /* Purple */
+      
+      /* Change text color */
+      color: white;
+      
+      /* Add border color */
+      border-color: #764ba2; /* Darker purple */
+      
+      /* Slightly increase size (scale = resize) */
+      transform: scale(1.05); /* 5% bigger */
+      
+      /* Add shadow for "lifted" effect */
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      
+      /* All these changes are SMOOTH thanks to transition! */
+    }
+
+    /* ============================================ */
+    /* ACTIVE STATE - What happens when clicking
+    /* ============================================ */
+    .nav-link:active {
+      /* Shrink slightly when clicked */
+      transform: scale(0.95); /* 5% smaller */
+      
+      /* This also transitions smoothly! */
+    }
+
+    /* ============================================ */
+    /* DEMO SECTION - Shows different transition examples
+    /* ============================================ */
+    .demo-section {
+      background-color: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .demo-section h2 {
+      color: #2c3e50;
+      margin-bottom: 30px;
+      text-align: center;
+      font-size: 28px;
+    }
+
+    /* TRANSITION EXAMPLES CONTAINER */
+    .transition-examples {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    /* BASE STYLE for all example boxes */
+    .example-box {
+      width: 150px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: bold;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer; /* Shows it's clickable */
+    }
+
+    /* EXAMPLE 1 - Background color transition */
+    .example-1 {
+      background-color: #3498db; /* Blue */
+      
+      /* TRANSITION: Only animate background-color
+         Takes 0.5 seconds with ease timing */
+      transition: background-color 0.5s ease;
+    }
+
+    .example-1:hover {
+      background-color: #e74c3c; /* Changes to red */
+    }
+
+    /* EXAMPLE 2 - Size transition */
+    .example-2 {
+      background-color: #2ecc71; /* Green */
+      
+      /* TRANSITION: Only animate transform (size changes)
+         Takes 0.4 seconds with ease-in-out timing */
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .example-2:hover {
+      transform: scale(1.2); /* Grows 20% bigger */
+    }
+
+    /* EXAMPLE 3 - Rotation transition */
+    .example-3 {
+      background-color: #f39c12; /* Orange */
+      
+      /* TRANSITION: Animate transform (rotation)
+         Takes 0.6 seconds with ease timing */
+      transition: transform 0.6s ease;
+    }
+
+    .example-3:hover {
+      transform: rotate(180deg); /* Spins 180 degrees */
+    }
+
+    /* EXAMPLE 4 - Multiple properties */
+    .example-4 {
+      background-color: #9b59b6; /* Purple */
+      
+      /* TRANSITION: Animate MULTIPLE specific properties
+         Each can have different duration!
+         background-color takes 0.3s, transform takes 0.5s */
+      transition: 
+        background-color 0.3s ease,
+        transform 0.5s ease,
+        border-radius 0.4s ease;
+    }
+
+    .example-4:hover {
+      background-color: #1abc9c; /* Teal */
+      transform: scale(1.15) rotate(10deg); /* Bigger AND tilted */
+      border-radius: 50%; /* Becomes circle */
+    }
+
+    /* EXPLANATION SECTION */
+    .explanation {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 10px;
+      border-left: 5px solid #667eea;
+    }
+
+    .explanation h3 {
+      color: #667eea;
+      margin-bottom: 15px;
+    }
+
+    .explanation p {
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+
+    .explanation code {
+      background-color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #e74c3c;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+
+    /* RESPONSIVE - Mobile adjustments */
+    @media screen and (max-width: 768px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .navbar {
+        padding: 15px;
+        border-radius: 20px;
+      }
+
+      .nav-list {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .nav-link {
+        width: 100%;
+        text-align: center;
+      }
+
+      .demo-section {
+        padding: 20px;
+      }
+
+      .example-box {
+        width: 120px;
+        height: 120px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- PAGE TITLE -->
+    <h1 class="page-title">🎯 Hover Transitions Demo</h1>
+
+    <!-- ============================================ -->
+    <!-- NAVIGATION BAR with smooth transitions -->
+    <!-- ============================================ -->
+    <nav class="navbar">
+      <ul class="nav-list">
+        <li><a href="#home" class="nav-link">🏠 Home</a></li>
+        <li><a href="#about" class="nav-link">ℹ️ About</a></li>
+        <li><a href="#services" class="nav-link">⚙️ Services</a></li>
+        <li><a href="#portfolio" class="nav-link">💼 Portfolio</a></li>
+        <li><a href="#contact" class="nav-link">📧 Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- DEMO SECTION -->
+    <section class="demo-section">
+      <h2>🎨 Hover Over These Boxes!</h2>
+      
+      <!-- TRANSITION EXAMPLES -->
+      <div class="transition-examples">
+        
+        <!-- Example 1: Color change -->
+        <div class="example-box example-1">
+          Color<br>Transition<br>0.5s
+        </div>
+
+        <!-- Example 2: Size change -->
+        <div class="example-box example-2">
+          Size<br>Transition<br>0.4s
+        </div>
+
+        <!-- Example 3: Rotation -->
+        <div class="example-box example-3">
+          Rotation<br>Transition<br>0.6s
+        </div>
+
+        <!-- Example 4: Multiple properties -->
+        <div class="example-box example-4">
+          Multiple<br>Transitions<br>Combined!
+        </div>
+      </div>
+
+      <!-- EXPLANATION -->
+      <div class="explanation">
+        <h3>📚 How Transitions Work</h3>
+        
+        <p>
+          <strong>1. Basic Syntax:</strong><br>
+          <code>transition: property duration timing-function;</code>
+        </p>
+
+        <p>
+          <strong>2. Property:</strong> What to animate<br>
+          • <code>all</code> - Animates everything that changes<br>
+          • <code>background-color</code> - Only color changes<br>
+          • <code>transform</code> - Only size/rotation/position changes
+        </p>
+
+        <p>
+          <strong>3. Duration:</strong> How long the animation takes<br>
+          • <code>0.3s</code> = 0.3 seconds (fast)<br>
+          • <code>1s</code> = 1 second (medium)<br>
+          • <code>2s</code> = 2 seconds (slow)
+        </p>
+
+        <p>
+          <strong>4. Timing Function:</strong> How it animates<br>
+          • <code>ease</code> - Starts slow, speeds up, ends slow (most common)<br>
+          • <code>linear</code> - Constant speed<br>
+          • <code>ease-in-out</code> - Very smooth start and end
+        </p>
+
+        <p>
+          <strong>5. Multiple Transitions:</strong><br>
+          <code>transition: background 0.3s ease, transform 0.5s ease;</code><br>
+          This animates background in 0.3s AND transform in 0.5s!
+        </p>
+
+        <p style="margin-top: 20px; font-weight: bold; color: #667eea;">
+          💡 Pro Tip: Always add transitions to the DEFAULT state (not :hover).
+          This makes the animation work both when hovering AND when moving away!
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>

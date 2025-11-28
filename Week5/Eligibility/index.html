@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 13: Eligibility Checker</title>
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .method-section {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 5px solid #f5576c;
+    }
+
+    .method-section h2 {
+      color: #f5576c;
+      margin-bottom: 15px;
+      font-size: 22px;
+    }
+
+    .method-section p {
+      color: #555;
+      line-height: 1.8;
+      margin: 10px 0;
+    }
+
+    code {
+      background-color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #e74c3c;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+
+    .code-block {
+      background-color: #2c3e50;
+      color: #2ecc71;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      margin: 15px 0;
+      overflow-x: auto;
+    }
+
+    button {
+      background-color: #f5576c;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px 5px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    button:hover {
+      background-color: #e74c5c;
+      transform: translateY(-2px);
+    }
+
+    .button-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    #output {
+      margin-top: 30px;
+      padding: 25px;
+      background-color: #e8f4f8;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #2c3e50;
+      min-height: 50px;
+      display: none; /* Hidden until we have results */
+    }
+
+    .eligible {
+      background-color: #d4edda !important;
+      color: #155724 !important;
+      border: 2px solid #28a745;
+    }
+
+    .not-eligible {
+      background-color: #f8d7da !important;
+      color: #721c24 !important;
+      border: 2px solid #dc3545;
+    }
+
+    .comparison-table {
+      margin: 20px 0;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    .comparison-table th {
+      background-color: #f5576c;
+      color: white;
+    }
+
+    .comparison-table tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🎂 Task 13: Age Eligibility Checker</h1>
+
+    <!-- Explanation: IF-ELSE -->
+    <div class="method-section">
+      <h2>Method 1️⃣: If-Else Statement</h2>
+      <p><strong>What it does:</strong> Checks a condition and runs different code based on whether it's true or false.</p>
+      
+      <p><strong>Structure:</strong></p>
+      <div class="code-block">
+if (condition) {<br>
+  &nbsp;&nbsp;// Code runs if condition is TRUE<br>
+} else {<br>
+  &nbsp;&nbsp;// Code runs if condition is FALSE<br>
+}
+      </div>
+
+      <p><strong>Example:</strong></p>
+      <div class="code-block">
+if (age >= 18) {<br>
+  &nbsp;&nbsp;message = "You are eligible!";<br>
+} else {<br>
+  &nbsp;&nbsp;message = "Sorry, you are not eligible.";<br>
+}
+      </div>
+
+      <p><strong>Best for:</strong> When you have multiple lines of code to run, or complex logic.</p>
+    </div>
+
+    <!-- Explanation: TERNARY -->
+    <div class="method-section">
+      <h2>Method 2️⃣: Ternary Operator</h2>
+      <p><strong>What it does:</strong> A shortcut for simple if-else statements. It's a one-liner!</p>
+      
+      <p><strong>Structure:</strong></p>
+      <div class="code-block">
+condition ? valueIfTrue : valueIfFalse
+      </div>
+
+      <p><strong>Example:</strong></p>
+      <div class="code-block">
+message = (age >= 18) ? "You are eligible!" : "Sorry, you are not eligible.";
+      </div>
+
+      <p><strong>Best for:</strong> Simple decisions with one line of code for each outcome.</p>
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="method-section">
+      <h2>📊 Comparison: If-Else vs Ternary</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>If-Else</th>
+            <th>Ternary Operator</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Length</strong></td>
+            <td>Multiple lines</td>
+            <td>One line</td>
+          </tr>
+          <tr>
+            <td><strong>Readability</strong></td>
+            <td>Very clear</td>
+            <td>Compact (harder if complex)</td>
+          </tr>
+          <tr>
+            <td><strong>Use Case</strong></td>
+            <td>Complex logic, multiple statements</td>
+            <td>Simple decisions, assigning values</td>
+          </tr>
+          <tr>
+            <td><strong>Example</strong></td>
+            <td><code>if (x > 5) { ... } else { ... }</code></td>
+            <td><code>x > 5 ? "yes" : "no"</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Buttons to run the scripts -->
+    <div class="button-container">
+      <button onclick="checkEligibilityIfElse()">🔍 Check Using If-Else</button>
+      <button onclick="checkEligibilityTernary()">⚡ Check Using Ternary</button>
+    </div>
+
+    <!-- Output area -->
+    <div id="output"></div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- JAVASCRIPT CODE STARTS HERE -->
+  <!-- ============================================ -->
+  <script>
+    /* ============================================
+       METHOD 1: USING IF-ELSE STATEMENT
+       ============================================ */
+    function checkEligibilityIfElse() {
+      
+      // STEP 1: Get user's age using prompt()
+      // prompt() always returns a STRING, so we need to convert it
+      let ageInput = prompt("Enter your age:", "");
+      
+      // STEP 2: Check if user clicked Cancel or entered nothing
+      if (ageInput === null || ageInput === "") {
+        alert("You didn't enter an age!");
+        return; // Stop the function here
+      }
+
+      // STEP 3: Convert string to number
+      // parseInt() converts a string to an integer (whole number)
+      // Example: "25" becomes 25
+      let age = parseInt(ageInput);
+      
+      /* EXPLANATION OF parseInt():
+         - Takes a string and converts it to a number
+         - "18" (string) becomes 18 (number)
+         - If it can't convert, returns NaN (Not a Number)
+      */
+
+      // STEP 4: Check if the conversion was successful
+      // isNaN() checks if something is "Not a Number"
+      if (isNaN(age)) {
+        alert("Please enter a valid number!");
+        return;
+      }
+
+      // STEP 5: Declare variables for our result
+      let message; // Will hold the message
+      let isEligible; // Will hold true or false
+
+      // STEP 6: THE IF-ELSE STATEMENT
+      // Check if age is greater than or equal to 18
+      if (age >= 18) {
+        // This code runs if condition is TRUE (age >= 18)
+        message = "✅ You are ELIGIBLE! You can vote, drive, and more.";
+        isEligible = true;
+      } else {
+        // This code runs if condition is FALSE (age < 18)
+        message = "❌ You are NOT ELIGIBLE yet. You need to be 18 or older.";
+        isEligible = false;
+      }
+
+      /* EXPLANATION OF IF-ELSE:
+         - if (condition) - Checks if something is true
+         - >= means "greater than or equal to"
+         - If TRUE, runs first block { }
+         - If FALSE, runs else block { }
+         - Only ONE block runs, never both
+      */
+
+      // STEP 7: Display the result
+      displayResult(message, isEligible, "If-Else");
+
+      // STEP 8: Log to console for learning
+      console.log("--- METHOD 1: IF-ELSE ---");
+      console.log("Age entered:", age);
+      console.log("Is eligible:", isEligible);
+      console.log("Message:", message);
+    }
+
+    /* ============================================
+       METHOD 2: USING TERNARY OPERATOR
+       ============================================ */
+    function checkEligibilityTernary() {
+      
+      // STEP 1: Get user's age
+      let ageInput = prompt("Enter your age:", "");
+      
+      // STEP 2: Validate input
+      if (ageInput === null || ageInput === "") {
+        alert("You didn't enter an age!");
+        return;
+      }
+
+      // STEP 3: Convert to number
+      let age = parseInt(ageInput);
+      
+      // STEP 4: Check if valid
+      if (isNaN(age)) {
+        alert("Please enter a valid number!");
+        return;
+      }
+
+      // STEP 5: THE TERNARY OPERATOR
+      // Format: condition ? valueIfTrue : valueIfFalse
+      let isEligible = (age >= 18) ? true : false;
+      
+      /* EXPLANATION OF TERNARY:
+         - (age >= 18) is the condition
+         - ? means "if true, use this:"
+         - true is the value if condition is true
+         - : means "otherwise, use this:"
+         - false is the value if condition is false
+         
+         This ONE LINE does the same as:
+         if (age >= 18) {
+           isEligible = true;
+         } else {
+           isEligible = false;
+         }
+      */
+
+      // Another ternary for the message
+      let message = (age >= 18) 
+        ? "✅ You are ELIGIBLE! You can vote, drive, and more."
+        : "❌ You are NOT ELIGIBLE yet. You need to be 18 or older.";
+      
+      /* EXPLANATION:
+         Same logic, but for the message string
+         Much shorter than if-else!
+      */
+
+      // STEP 6: Display the result
+      displayResult(message, isEligible, "Ternary");
+
+      // STEP 7: Log to console
+      console.log("--- METHOD 2: TERNARY ---");
+      console.log("Age entered:", age);
+      console.log("Is eligible:", isEligible);
+      console.log("Message:", message);
+    }
+
+    /* ============================================
+       HELPER FUNCTION: Display Results on Page
+       ============================================ */
+    function displayResult(message, isEligible, method) {
+      // Get the output div
+      let outputDiv = document.getElementById("output");
+      
+      // Make it visible
+      outputDiv.style.display = "block";
+      
+      // Set the content
+      outputDiv.innerHTML = `
+        <h3>Method Used: ${method}</h3>
+        <p>${message}</p>
+        <p style="font-size: 14px; margin-top: 15px;">
+          <em>Check the browser console (F12) to see detailed logs!</em>
+        </p>
+      `;
+      
+      /* EXPLANATION OF ${} :
+         This is called "template literals" or "string interpolation"
+         ${method} inserts the value of the method variable
+         ${message} inserts the value of the message variable
+         Makes it easy to combine text and variables!
+      */
+      
+      // Add appropriate styling
+      if (isEligible) {
+        outputDiv.className = "eligible";
+      } else {
+        outputDiv.className = "not-eligible";
+      }
+    }
+
+    /* ============================================
+       KEY CONCEPTS SUMMARY:
+       
+       COMPARISON OPERATORS:
+       - >= Greater than or equal to
+       - <= Less than or equal to
+       - > Greater than
+       - < Less than
+       - === Exactly equal to
+       - !== Not equal to
+       
+       IF-ELSE:
+       - Full syntax for decision making
+       - Can have multiple lines in each block
+       - Very readable
+       - Use for complex logic
+       
+       TERNARY OPERATOR:
+       - Shorthand for simple if-else
+       - Format: condition ? ifTrue : ifFalse
+       - One line only
+       - Use for simple assignments
+       
+       TYPE CONVERSION:
+       - parseInt("25") converts string to number
+       - isNaN(x) checks if x is Not a Number
+       - Always validate user input!
+       
+       TEMPLATE LITERALS:
+       - Use backticks: `text ${variable} more text`
+       - ${variable} inserts variable value
+       - Much cleaner than "text " + variable + " more"
+       ============================================ */
+  </script>
+
+</body>
+</html>

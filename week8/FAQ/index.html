@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> FAQ Section with jQuery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 32px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #764ba2;
+            margin-bottom: 30px;
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        /* FAQ Styles */
+        .faq-section {
+            margin-top: 20px;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: #667eea;
+        }
+
+        .faq-question {
+            background: #f8f9fa;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+
+        .faq-question h3 {
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .faq-icon {
+            font-size: 24px;
+            color: #667eea;
+            transition: transform 0.3s ease;
+            font-weight: bold;
+        }
+
+        .faq-question.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            background: white;
+            padding: 20px;
+            display: none; /* Hidden initially for slideToggle */
+            color: #555;
+            line-height: 1.6;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .note {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f4ff;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .note h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .note p {
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+  
+    <div class="container">
+       
+        <h2>FAQ Section with jQuery .slideToggle()</h2>
+        
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What is jQuery?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across multiple browsers.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How does slideToggle() work?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    The slideToggle() method toggles between slideUp() and slideDown() for the selected elements. It creates a smooth sliding animation when showing or hiding elements. If the element is hidden, it will slide down; if visible, it will slide up.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What are jQuery selectors?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    jQuery selectors allow you to select and manipulate HTML elements. They are based on CSS selectors and also include some custom jQuery selectors. You can select elements by ID (#id), class (.class), element type (div), attributes ([attribute]), and more.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Why use jQuery in modern web development?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    While modern JavaScript has evolved significantly, jQuery is still useful for rapid prototyping, working with legacy codebases, and creating quick animations. It provides a simple, consistent API that works across all browsers, reducing the amount of code you need to write.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What is the difference between .hide() and .fadeOut()?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    The .hide() method instantly hides an element by setting its display property to none, while .fadeOut() gradually decreases the element's opacity to 0 before hiding it, creating a smooth fade-out animation effect over a specified duration.
+                </div>
+            </div>
+        </div>
+
+        <!-- Note Section -->
+        <div class="note">
+            <h3>📝 How it works:</h3>
+            <p>Click any question to see the answer slide down smoothly using jQuery's <strong>.slideToggle()</strong> method. Click again to slide it back up. The icon rotates to indicate the open/closed state.</p>
+        </div>
+    </div>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+      
+        
+        $(document).ready(function() {
+            // When a FAQ question is clicked
+            $('.faq-question').click(function() {
+                // Get the answer element (next sibling of the clicked question)
+                var answer = $(this).next('.faq-answer');
+                
+                
+                answer.slideToggle(400);
+                
+                // Toggle the 'active' class on the question for icon rotation
+                $(this).toggleClass('active');
+            });
+        });
+
+       
+    </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - CSS Learning</title>
+  <style>
+    /* ELEMENT SELECTOR - Targets all <body> elements */
+    /* Using HEX color format (#RRGGBB) */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5; /* Light gray background */
+      color: #333333; /* Dark gray text */
+      margin: 0;
+      padding: 20px;
+    }
+
+    /* ELEMENT SELECTOR - Targets all <h1> elements */
+    /* Using RGB color format (Red, Green, Blue values 0-255) */
+    h1 {
+      text-align: center;
+      color: rgb(41, 128, 185); /* Blue color */
+      margin-bottom: 10px;
+    }
+
+    /* PSEUDO-ELEMENT SELECTOR - Targets the first letter of <h1> */
+    /* Using HSL color format (Hue, Saturation, Lightness) */
+    h1::first-letter {
+      font-size: 150%;
+      color: hsl(280, 70%, 50%); /* Purple color */
+      font-weight: bold;
+    }
+
+    /* CLASS SELECTOR - Targets elements with class="container" */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* CLASS SELECTOR - Targets elements with class="description" */
+    /* Using RGBA color format (Red, Green, Blue, Alpha/transparency) */
+    .description {
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.6;
+      color: rgba(50, 50, 50, 0.9); /* Almost black with slight transparency */
+      margin-bottom: 30px;
+    }
+
+    /* ID SELECTOR - Targets the element with id="team-section" */
+    /* Using HEX color */
+    #team-section {
+      background-color: #e8f4f8; /* Very light blue */
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    /* ELEMENT SELECTOR - Targets all <h2> elements */
+    h2 {
+      color: rgb(52, 73, 94); /* Dark blue-gray */
+      border-bottom: 3px solid hsl(200, 50%, 60%); /* Light blue border */
+      padding-bottom: 10px;
+    }
+
+    /* CLASS SELECTOR - Targets elements with class="team-member" */
+    .team-member {
+      background-color: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border-left: 4px solid rgb(46, 204, 113); /* Green accent */
+    }
+
+    /* ATTRIBUTE SELECTOR - Targets all elements with a "data-role" attribute */
+    [data-role] {
+      font-weight: bold;
+      color: hsl(340, 80%, 50%); /* Pink-red color */
+    }
+
+    /* PSEUDO-CLASS SELECTOR - Targets links when you hover over them */
+    /* Using RGBA for hover effect */
+    .contact-link:hover {
+      background-color: rgba(52, 152, 219, 0.2); /* Light blue with transparency */
+      color: rgb(41, 128, 185);
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    /* PSEUDO-CLASS SELECTOR - Targets links when they are active (being clicked) */
+    .contact-link:active {
+      background-color: rgba(52, 152, 219, 0.4); /* Darker blue when clicked */
+    }
+
+    /* CLASS SELECTOR with PSEUDO-ELEMENT - Adds content after the element */
+    .contact-info::after {
+      content: " 📧"; /* Adds an email icon after the text */
+      font-size: 20px;
+    }
+
+    /* ELEMENT SELECTOR - Targets all <a> (link) elements */
+    a {
+      color: #3498db; /* Blue using HEX */
+      text-decoration: none;
+    }
+
+    /* ID SELECTOR - Targets the element with id="footer" */
+    #footer {
+      text-align: center;
+      margin-top: 30px;
+      padding: 20px;
+      background-color: rgb(44, 62, 80); /* Dark blue-gray */
+      color: rgba(255, 255, 255, 0.95); /* Almost white with slight transparency */
+      border-radius: 8px;
+    }
+
+    /* PSEUDO-CLASS SELECTOR - Targets input fields when they are focused (clicked into) */
+    input:focus {
+      outline: 3px solid hsl(140, 60%, 50%); /* Green outline */
+      background-color: rgba(46, 204, 113, 0.1); /* Very light green background */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main container using CLASS selector -->
+  <div class="container">
+    
+    <!-- Heading using ELEMENT selector and PSEUDO-ELEMENT for first letter -->
+    <h1>About Our Company</h1>
+    
+    <!-- Description using CLASS selector -->
+    <p class="description">
+      We are a passionate team dedicated to helping people learn web development. 
+      Our mission is to make coding accessible, fun, and rewarding for everyone!
+    </p>
+
+    <!-- Team section using ID selector -->
+    <div id="team-section">
+      <h2>Meet Our Team</h2>
+      
+      <!-- Team members using CLASS selector and ATTRIBUTE selector -->
+      <div class="team-member">
+        <strong>Sarah Johnson</strong> - <span data-role="Founder">Founder</span>
+        <p>Loves teaching CSS and making beautiful websites.</p>
+      </div>
+      
+      <div class="team-member">
+        <strong>Mike Chen</strong> - <span data-role="Developer">Developer</span>
+        <p>Expert in JavaScript and making websites interactive.</p>
+      </div>
+      
+      <div class="team-member">
+        <strong>Emma Williams</strong> - <span data-role="Designer">Designer</span>
+        <p>Creates stunning designs that bring ideas to life.</p>
+      </div>
+    </div>
+
+    <!-- Contact section using PSEUDO-CLASS and PSEUDO-ELEMENT selectors -->
+    <div class="contact-info">
+      <h2>Get In Touch</h2>
+      <p>
+        Have questions? 
+        <a href="mailto:hello@example.com" class="contact-link">Contact us here</a>
+      </p>
+      
+      <!-- Demo input to show :focus pseudo-class -->
+      <p>Try clicking this input box to see the focus effect:</p>
+      <input type="text" placeholder="Your email address" style="padding: 10px; width: 100%; border: 2px solid #ddd; border-radius: 5px;">
+    </div>
+
+    <!-- Footer using ID selector -->
+    <div id="footer">
+      <p>© 2024 Our Company. Built with love and CSS! ❤️</p>
+    </div>
+
+  </div>
+
+</body>
+</html>

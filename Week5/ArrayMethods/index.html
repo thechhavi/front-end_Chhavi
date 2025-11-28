@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 14: Array Methods</title>
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .intro {
+      text-align: center;
+      color: #555;
+      margin-bottom: 40px;
+      font-size: 16px;
+    }
+
+    .method-card {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 10px;
+      margin: 25px 0;
+      border-left: 5px solid #4facfe;
+    }
+
+    .method-card h2 {
+      color: #4facfe;
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+
+    .method-card .description {
+      background-color: #e8f4f8;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      color: #2c3e50;
+      font-weight: bold;
+    }
+
+    .code-example {
+      background-color: #2c3e50;
+      color: #2ecc71;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      margin: 15px 0;
+      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .result-box {
+      background-color: #d4edda;
+      border: 2px solid #28a745;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      color: #155724;
+      font-weight: bold;
+    }
+
+    .result-box span {
+      color: #0c5460;
+      font-family: 'Courier New', monospace;
+    }
+
+    button {
+      background-color: #4facfe;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px 5px 10px 0;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #3a9cee;
+      transform: translateY(-2px);
+    }
+
+    .key-points {
+      background-color: #fff3cd;
+      border-left: 5px solid #ffc107;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 5px;
+    }
+
+    .key-points h4 {
+      color: #856404;
+      margin-bottom: 10px;
+    }
+
+    .key-points ul {
+      margin: 10px 0;
+      padding-left: 25px;
+      color: #856404;
+    }
+
+    .key-points li {
+      margin: 5px 0;
+    }
+
+    #demo-output {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      min-height: 50px;
+      border: 2px dashed #4facfe;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>📊 Task 14: JavaScript Array Methods</h1>
+    <p class="intro">
+      Arrays are lists of items. JavaScript gives us powerful methods to work with them!<br>
+      Let's learn the 4 most important methods: <strong>map(), filter(), reduce(), forEach()</strong>
+    </p>
+
+    <!-- ============================================ -->
+    <!-- METHOD 1: map() -->
+    <!-- ============================================ -->
+    <div class="method-card">
+      <h2>1️⃣ map() - Transform Each Item</h2>
+      
+      <div class="description">
+        📝 <strong>What it does:</strong> Creates a NEW array by transforming each item in the original array.
+      </div>
+
+      <div class="key-points">
+        <h4>🔑 Key Points:</h4>
+        <ul>
+          <li>Takes each item, does something to it, returns new value</li>
+          <li>Returns a NEW array (same length as original)</li>
+          <li>Does NOT change the original array</li>
+          <li>Perfect for: Converting data, calculations on each item</li>
+        </ul>
+      </div>
+
+      <p><strong>Example: Double each number</strong></p>
+      <div class="code-example">
+// Original array<br>
+let numbers = [1, 2, 3, 4, 5];<br>
+<br>
+// Using map() to double each number<br>
+let doubled = numbers.map(function(num) {<br>
+&nbsp;&nbsp;return num * 2;<br>
+});<br>
+<br>
+// Result: [2, 4, 6, 8, 10]
+      </div>
+
+      <p><strong>How it works step-by-step:</strong></p>
+      <div class="code-example">
+// map() goes through each item:<br>
+// Round 1: num = 1, returns 1 * 2 = 2<br>
+// Round 2: num = 2, returns 2 * 2 = 4<br>
+// Round 3: num = 3, returns 3 * 2 = 6<br>
+// Round 4: num = 4, returns 4 * 2 = 8<br>
+// Round 5: num = 5, returns 5 * 2 = 10<br>
+// New array: [2, 4, 6, 8, 10]
+      </div>
+
+      <button onclick="demoMap()">▶️ Run map() Demo</button>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- METHOD 2: filter() -->
+    <!-- ============================================ -->
+    <div class="method-card">
+      <h2>2️⃣ filter() - Select Specific Items</h2>
+      
+      <div class="description">
+        📝 <strong>What it does:</strong> Creates a NEW array with only items that pass a test (condition).
+      </div>
+
+      <div class="key-points">
+        <h4>🔑 Key Points:</h4>
+        <ul>
+          <li>Tests each item with a condition (true/false)</li>
+          <li>Returns NEW array with only items that passed (true)</li>
+          <li>Result can be shorter than original array</li>
+          <li>Perfect for: Finding specific items, removing unwanted data</li>
+        </ul>
+      </div>
+
+      <p><strong>Example: Get only even numbers</strong></p>
+      <div class="code-example">
+// Original array<br>
+let numbers = [1, 2, 3, 4, 5, 6, 7, 8];<br>
+<br>
+// Using filter() to get even numbers only<br>
+let evenNumbers = numbers.filter(function(num) {<br>
+&nbsp;&nbsp;return num % 2 === 0;<br>
+});<br>
+<br>
+// Result: [2, 4, 6, 8]
+      </div>
+
+      <p><strong>How it works step-by-step:</strong></p>
+      <div class="code-example">
+// filter() checks each item:<br>
+// num = 1, is 1 % 2 === 0? NO (false) → skip<br>
+// num = 2, is 2 % 2 === 0? YES (true) → keep<br>
+// num = 3, is 3 % 2 === 0? NO (false) → skip<br>
+// num = 4, is 4 % 2 === 0? YES (true) → keep<br>
+// ... and so on<br>
+// New array: [2, 4, 6, 8]
+      </div>
+
+      <button onclick="demoFilter()">▶️ Run filter() Demo</button>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- METHOD 3: reduce() -->
+    <!-- ============================================ -->
+    <div class="method-card">
+      <h2>3️⃣ reduce() - Combine Into Single Value</h2>
+      
+      <div class="description">
+        📝 <strong>What it does:</strong> Reduces an array to a SINGLE value by combining all items together.
+      </div>
+
+      <div class="key-points">
+        <h4>🔑 Key Points:</h4>
+        <ul>
+          <li>Takes all items and combines them into ONE value</li>
+          <li>Has an "accumulator" that stores the running total</li>
+          <li>Returns a single value (number, string, object, etc.)</li>
+          <li>Perfect for: Summing, counting, combining data</li>
+        </ul>
+      </div>
+
+      <p><strong>Example: Sum all numbers</strong></p>
+      <div class="code-example">
+// Original array<br>
+let numbers = [1, 2, 3, 4, 5];<br>
+<br>
+// Using reduce() to sum all numbers<br>
+let sum = numbers.reduce(function(total, num) {<br>
+&nbsp;&nbsp;return total + num;<br>
+}, 0); // 0 is the starting value<br>
+<br>
+// Result: 15
+      </div>
+
+      <p><strong>How it works step-by-step:</strong></p>
+      <div class="code-example">
+// reduce() combines items:<br>
+// Start: total = 0 (starting value)<br>
+// Round 1: total = 0, num = 1, returns 0 + 1 = 1<br>
+// Round 2: total = 1, num = 2, returns 1 + 2 = 3<br>
+// Round 3: total = 3, num = 3, returns 3 + 3 = 6<br>
+// Round 4: total = 6, num = 4, returns 6 + 4 = 10<br>
+// Round 5: total = 10, num = 5, returns 10 + 5 = 15<br>
+// Final result: 15
+      </div>
+
+      <button onclick="demoReduce()">▶️ Run reduce() Demo</button>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- METHOD 4: forEach() -->
+    <!-- ============================================ -->
+    <div class="method-card">
+      <h2>4️⃣ forEach() - Do Something With Each Item</h2>
+      
+      <div class="description">
+        📝 <strong>What it does:</strong> Runs a function for each item in the array. Does NOT return anything.
+      </div>
+
+      <div class="key-points">
+        <h4>🔑 Key Points:</h4>
+        <ul>
+          <li>Loops through each item in the array</li>
+          <li>Does NOT return a new array</li>
+          <li>Just performs an action (like printing, updating, etc.)</li>
+          <li>Perfect for: Displaying data, side effects, logging</li>
+        </ul>
+      </div>
+
+      <p><strong>Example: Print each item</strong></p>
+      <div class="code-example">
+// Original array<br>
+let fruits = ["Apple", "Banana", "Orange"];<br>
+<br>
+// Using forEach() to print each fruit<br>
+fruits.forEach(function(fruit, index) {<br>
+&nbsp;&nbsp;console.log(index + ": " + fruit);<br>
+});<br>
+<br>
+// Console output:<br>
+// 0: Apple<br>
+// 1: Banana<br>
+// 2: Orange
+      </div>
+
+      <p><strong>How it works step-by-step:</strong></p>
+      <div class="code-example">
+// forEach() visits each item:<br>
+// Round 1: fruit = "Apple", index = 0 → prints "0: Apple"<br>
+// Round 2: fruit = "Banana", index = 1 → prints "1: Banana"<br>
+// Round 3: fruit = "Orange", index = 2 → prints "2: Orange"<br>
+// Returns: nothing (undefined)
+      </div>
+
+      <button onclick="demoForEach()">▶️ Run forEach() Demo</button>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- COMPARISON TABLE -->
+    <!-- ============================================ -->
+    <div class="method-card">
+      <h2>📋 Quick Comparison</h2>
+      <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <thead>
+          <tr style="background-color: #4facfe; color: white;">
+            <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Method</th>
+            <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Returns</th>
+            <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Use Case</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background-color: #f8f9fa;">
+            <td style="padding: 12px; border: 1px solid #ddd;"><strong>map()</strong></td>
+            <td style="padding: 12px; border: 1px solid #ddd;">New array (transformed)</td>
+            <td style="padding: 12px; border: 1px solid #ddd;">Transform each item</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border: 1px solid #ddd;"><strong>filter()</strong></td>
+            <td style="padding: 12px; border: 1px solid #ddd;">New array (filtered)</td>
+            <td style="padding: 12px; border: 1px solid #ddd;">Select specific items</td>
+          </tr>
+          <tr style="background-color: #f8f9fa;">
+            <td style="padding: 12px; border: 1px solid #ddd;"><strong>reduce()</strong></td>
+            <td style="padding: 12px; border: 1px solid #ddd;">Single value</td>
+            <td style="padding: 12px; border: 1px solid #ddd;">Combine all items</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; border: 1px solid #ddd;"><strong>forEach()</strong></td>
+            <td style="padding: 12px; border: 1px solid #ddd;">Nothing (undefined)</td>
+            <td style="padding: 12px; border: 1px solid #ddd;">Do something with each</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Demo output area -->
+    <div id="demo-output"></div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- JAVASCRIPT CODE WITH DEMOS -->
+  <!-- ============================================ -->
+  <script>
+    /* ============================================
+       DEMO 1: map() - Transform each item
+       ============================================ */
+    function demoMap() {
+      // Clear previous output
+      let output = document.getElementById("demo-output");
+      
+      // Original array
+      let numbers = [1, 2, 3, 4, 5];
+      
+      /* Using map() to double each number
+         
+         SYNTAX: array.map(function(item, index, array) {
+           return transformedItem;
+         });
+         
+         Parameters:
+         - item: Current item being processed
+         - index: Position of item (optional)
+         - array: The original array (optional)
+      */
+      
+      let doubled = numbers.map(function(num) {
+        // This function runs for EACH number
+        // Whatever we return becomes the new value
+        return num * 2;
+      });
+      
+      // BONUS: Arrow function syntax (shorter way to write)
+      // let doubled = numbers.map(num => num * 2);
+      
+      // Display results
+      output.innerHTML = `
+        <h3>🎯 map() Demo Results:</h3>
+        <div class="result-box">
+          <p><strong>Original Array:</strong> <span>[${numbers}]</span></p>
+          <p><strong>After map (doubled):</strong> <span>[${doubled}]</span></p>
+          <p><strong>What happened:</strong> Each number was multiplied by 2</p>
+        </div>
+      `;
+      
+      // Console logging for learning
+      console.log("--- map() DEMO ---");
+      console.log("Original:", numbers);
+      console.log("Doubled:", doubled);
+    }
+
+    /* ============================================
+       DEMO 2: filter() - Select specific items
+       ============================================ */
+    function demoFilter() {
+      let output = document.getElementById("demo-output");
+      
+      // Original array
+      let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      
+      /* Using filter() to get even numbers only
+         
+         SYNTAX: array.filter(function(item, index, array) {
+           return true or false;
+         });
+         
+         - Returns TRUE → item is KEPT in new array
+         - Returns FALSE → item is REMOVED
+         
+         The % (modulo) operator returns the remainder:
+         - 4 % 2 = 0 (even number)
+         - 5 % 2 = 1 (odd number)
+      */
+      
+      let evenNumbers = numbers.filter(function(num) {
+        // Test: Is this number even?
+        return num % 2 === 0;
+        // If true, keep it. If false, skip it.
+      });
+      
+      // BONUS: Also get odd numbers
+      let oddNumbers = numbers.filter(function(num) {
+        return num % 2 !== 0; // !== means "not equal to"
+      });
+      
+      // Display results
+      output.innerHTML = `
+        <h3>🎯 filter() Demo Results:</h3>
+        <div class="result-box">
+          <p><strong>Original Array:</strong> <span>[${numbers}]</span></p>
+          <p><strong>Even Numbers:</strong> <span>[${evenNumbers}]</span></p>
+          <p><strong>Odd Numbers:</strong> <span>[${oddNumbers}]</span></p>
+          <p><strong>What happened:</strong> Array was filtered based on conditions</p>
+        </div>
+      `;
+      
+      console.log("--- filter() DEMO ---");
+      console.log("Original:", numbers);
+      console.log("Even:", evenNumbers);
+      console.log("Odd:", oddNumbers);
+    }
+
+    /* ============================================
+       DEMO 3: reduce() - Combine into single value
+       ============================================ */
+    function demoReduce() {
+      let output = document.getElementById("demo-output");
+      
+      // Original array
+      let numbers = [5, 10, 15, 20];
+      
+      /* Using reduce() to sum all numbers
+         
+         SYNTAX: array.reduce(function(accumulator, currentItem, index, array) {
+           return newAccumulatorValue;
+         }, initialValue);
+         
+         Parameters:
+         - accumulator: The "running total" (starts as initialValue)
+         - currentItem: Current item being processed
+         - initialValue: Starting value (0 in this case)
+         
+         Think of it like a snowball rolling down a hill,
+         getting bigger as it picks up more snow!
+      */
+      
+      let sum = numbers.reduce(function(total, num) {
+        // Add current number to running total
+        console.log(`Total: ${total}, Adding: ${num}, New Total: ${total + num}`);
+        return total + num;
+      }, 0); // Start with 0
+      
+      // BONUS: Find the maximum number
+      let max = numbers.reduce(function(highest, num) {
+        // Keep the higher of the two
+        return num > highest ? num : highest;
+      }, numbers[0]); // Start with first number
+      
+      // Display results
+      output.innerHTML = `
+        <h3>🎯 reduce() Demo Results:</h3>
+        <div class="result-box">
+          <p><strong>Original Array:</strong> <span>[${numbers}]</span></p>
+          <p><strong>Sum of all numbers:</strong> <span>${sum}</span></p>
+          <p><strong>Maximum number:</strong> <span>${max}</span></p>
+          <p><strong>What happened:</strong> All items combined into single values</p>
+          <p><em>Check console (F12) to see step-by-step calculation!</em></p>
+        </div>
+      `;
+      
+      console.log("--- reduce() DEMO ---");
+      console.log("Original:", numbers);
+      console.log("Sum:", sum);
+      console.log("Max:", max);
+    }
+
+    /* ============================================
+       DEMO 4: forEach() - Do something with each
+       ============================================ */
+    function demoForEach() {
+      let output = document.getElementById("demo-output");
+      
+      // Original array
+      let fruits = ["🍎 Apple", "🍌 Banana", "🍊 Orange", "🍇 Grapes", "🍓 Strawberry"];
+      
+      /* Using forEach() to display each fruit
+         
+         SYNTAX: array.forEach(function(item, index, array) {
+           // Do something with item
+         });
+         
+         NOTE: forEach() does NOT return anything!
+         It just performs an action for each item.
+      */
+      
+      let outputText = "";
+      
+      fruits.forEach(function(fruit, index) {
+        // Build a string with each fruit
+        // index gives us the position (0, 1, 2, etc.)
+        outputText += `<p>Item ${index + 1}: ${fruit}</p>`;
+        
+        // Also log to console
+        console.log(`Item ${index + 1}: ${fruit}`);
+      });
+      
+      /* IMPORTANT DIFFERENCE:
+         forEach() vs map():
+         
+         forEach():
+         - Just does something (side effects)
+         - Returns nothing (undefined)
+         - Can't chain with other methods
+         - Use when you just want to DO something
+         
+         map():
+         - Creates and returns new array
+         - Can chain with other methods
+         - Use when you need transformed data
+      */
+      
+      // Display results
+      output.innerHTML = `
+        <h3>🎯 forEach() Demo Results:</h3>
+        <div class="result-box">
+          <p><strong>Original Array:</strong> <span>[${fruits.join(', ')}]</span></p>
+          <p><strong>forEach() loop output:</strong></p>
+          ${outputText}
+          <p style="margin-top: 15px;"><strong>What happened:</strong> Displayed each item (no new array created)</p>
+        </div>
+      `;
+      
+      console.log("--- forEach() DEMO ---");
+      console.log("Original:", fruits);
+      console.log("forEach() returns:", fruits.forEach(f => f)); // undefined
+    }
+
+    /* ============================================
+       BONUS: CHAINING METHODS
+       You can chain these methods together!
+       ============================================ */
+    function bonusDemo() {
+      let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      
+      // Chain: filter → map → reduce
+      let result = numbers
+        .filter(num => num % 2 === 0)  // Get even numbers: [2, 4, 6, 8, 10]
+        .map(num => num * 2)            // Double them: [4, 8, 12, 16, 20]
+        .reduce((sum, num) => sum + num, 0); // Sum them: 60
+      
+      console.log("Chained result:", result); // 60
+    }
+
+    /* ============================================
+       KEY CONCEPTS SUMMARY:
+       
+       ARRAY METHODS:
+       
+       1. map() - Transform
+          - Returns NEW array
+          - Same length as original
+          - Transforms each item
+          
+       2. filter() - Select
+          - Returns NEW array
+          - Can be shorter
+          - Keeps items that pass test
+          
+       3. reduce() - Combine
+          - Returns SINGLE value
+          - Combines all items
+          - Uses accumulator pattern
+          
+       4. forEach() - Execute
+          - Returns NOTHING
+          - Just performs action
+          - For side effects only
+       
+       WHEN TO USE WHAT:
+       - Need transformed data? → map()
+       - Need to find items? → filter()
+       - Need one value from all? → reduce()
+       - Just need to do something? → forEach()
+       
+       ARROW FUNCTIONS (shorthand):
+       - Old: function(x) { return x * 2; }
+       - New: x => x * 2
+       - Same thing, less typing!
+       ============================================ */
+  </script>
+
+</body>
+</html>

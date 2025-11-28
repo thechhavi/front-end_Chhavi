@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Login Form with Fade Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h2 {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            font-weight: normal;
+        }
+
+        /* Login Form Styles */
+        .login-form {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: none; /* Hidden initially for fadeIn effect */
+        }
+
+        .form-title {
+            color: #667eea;
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .form-subtitle {
+            color: #999;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            color: #666;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+        }
+
+        .forgot-link {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-link:hover {
+            color: #764ba2;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            color: #764ba2;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: none;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .success-message h3 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .success-message p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Control Buttons */
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .control-btn {
+            background: white;
+            color: #667eea;
+            border: 2px solid white;
+            padding: 10px 25px;
+            font-size: 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 5px;
+            font-weight: 600;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================ -->
+    <!-- Task 21: Login Form with Fade Animations -->
+    <!-- ============================================ -->
+    <div class="container">
+        <div class="header">
+           
+            <h2>Login Form with jQuery Fade Effects</h2>
+        </div>
+
+        <!-- Login Form -->
+        <div class="login-form" id="loginForm">
+            <h2 class="form-title">Welcome Back</h2>
+            <p class="form-subtitle">Please login to your account</p>
+
+            <form id="loginFormElement">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="remember-forgot">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember">
+                        Remember me
+                    </label>
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+
+            <div class="signup-link">
+                Don't have an account? <a href="#" id="signupLink">Sign up</a>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+            <div class="success-icon">✓</div>
+            <h3>Login Successful!</h3>
+            <p>You have been successfully logged in to your account.</p>
+            <button class="back-btn" id="backBtn">Back to Login</button>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="controls">
+            <button class="control-btn" id="showFormBtn">Show Form (fadeIn)</button>
+            <button class="control-btn" id="hideFormBtn">Hide Form (fadeOut)</button>
+        </div>
+    </div>
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        // ============================================
+        // TASK 21: Login Form with Fade Animations
+        // ============================================
+        
+        $(document).ready(function() {
+            
+            // Show the login form with fadeIn animation on page load
+            $('#loginForm').fadeIn(1000); // 1000ms = 1 second
+
+            // ============================================
+            // Form Submission Handler
+            // ============================================
+            $('#loginFormElement').submit(function(e) {
+                e.preventDefault(); // Prevent actual form submission
+                
+                // Fade out the login form
+                $('#loginForm').fadeOut(600, function() {
+                    // After fade out completes, show success message
+                    $('#successMessage').fadeIn(600);
+                });
+            });
+
+            // ============================================
+            // Back Button - Return to Login Form
+            // ============================================
+            $('#backBtn').click(function() {
+                // Fade out success message
+                $('#successMessage').fadeOut(600, function() {
+                    // After fade out, clear form and show login form again
+                    $('#loginFormElement')[0].reset();
+                    $('#loginForm').fadeIn(600);
+                });
+            });
+
+            // ============================================
+            // Manual Control Buttons
+            // ============================================
+            
+            // Show Form Button - demonstrates .fadeIn()
+            $('#showFormBtn').click(function() {
+                $('#successMessage').fadeOut(400);
+                $('#loginForm').fadeIn(800);
+            });
+
+            // Hide Form Button - demonstrates .fadeOut()
+            $('#hideFormBtn').click(function() {
+                $('#loginForm').fadeOut(800);
+            });
+
+            // ============================================
+            // Sign Up Link Handler
+            // ============================================
+            $('#signupLink').click(function(e) {
+                e.preventDefault();
+                
+                // Fade out current form
+                $('#loginForm').fadeOut(400, function() {
+                    // You could show a signup form here
+                    alert('Signup form would appear here!');
+                    // Then fade the login form back in
+                    $('#loginForm').fadeIn(400);
+                });
+            });
+
+            // ============================================
+            // Forgot Password Link Handler
+            // ============================================
+            $('.forgot-link').click(function(e) {
+                e.preventDefault();
+                
+                // Quick fade effect
+                $('#loginForm').fadeOut(300).fadeIn(300);
+                alert('Password reset link would be sent to your email!');
+            });
+        });
+
+       
+    </script>
+</body>
+</html>

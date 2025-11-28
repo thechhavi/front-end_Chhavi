@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 7: Product Card</title>
+  <style>
+    /* ============================================ */
+    /* CSS BOX MODEL EXPLANATION:
+    /* Every element is a box with these layers:
+    /* 1. CONTENT - The actual content (text, image)
+    /* 2. PADDING - Space INSIDE the box, around content
+    /* 3. BORDER - Line around the padding
+    /* 4. MARGIN - Space OUTSIDE the box, between elements
+    /* ============================================ */
+
+    /* RESET - Remove default spacing */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box; /* Includes padding & border in width calculation */
+    }
+
+    /* BODY - Page background */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Purple gradient */
+      padding: 40px 20px; /* PADDING: 40px top/bottom, 20px left/right */
+      min-height: 100vh;
+      display: flex;
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
+    }
+
+    /* CONTAINER - Wrapper to center card */
+    .container {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    /* HEADING */
+    .page-title {
+      text-align: center;
+      color: white;
+      margin-bottom: 40px; /* MARGIN: Space below heading */
+      font-size: 32px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* PRODUCT CARD - Main container */
+    .product-card {
+      background-color: white;
+      max-width: 350px; /* Maximum width */
+      margin: 0 auto; /* MARGIN: Centers the card horizontally */
+      
+      /* BORDER: 2px thick, solid line, light gray color */
+      border: 2px solid #e0e0e0;
+      
+      border-radius: 15px; /* Rounded corners */
+      overflow: hidden; /* Keeps image from going outside rounded corners */
+      
+      /* BOX-SHADOW: Creates depth effect
+         Format: horizontal vertical blur spread color */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      
+      transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+    }
+
+    /* HOVER EFFECT - Card lifts up when hovering */
+    .product-card:hover {
+      transform: translateY(-10px); /* Move up by 10px */
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); /* Bigger shadow */
+    }
+
+    /* PRODUCT IMAGE CONTAINER */
+    .product-image {
+      width: 100%;
+      height: 300px;
+      background-color: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* PRODUCT IMAGE */
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Fills space without distortion */
+    }
+
+    /* PLACEHOLDER IMAGE (if no image is used) */
+    .product-image-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+    }
+
+    /* PRODUCT INFO SECTION */
+    .product-info {
+      /* PADDING: Space INSIDE this section, all around the content */
+      padding: 25px; /* 25px on all sides (top, right, bottom, left) */
+    }
+
+    /* PRODUCT CATEGORY */
+    .product-category {
+      color: #667eea;
+      font-size: 12px;
+      text-transform: uppercase; /* Makes text UPPERCASE */
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 10px; /* MARGIN: Space below category */
+    }
+
+    /* PRODUCT TITLE */
+    .product-title {
+      font-size: 24px;
+      color: #2c3e50;
+      margin-bottom: 12px; /* MARGIN: Space below title */
+      font-weight: 600;
+    }
+
+    /* PRODUCT DESCRIPTION */
+    .product-description {
+      color: #7f8c8d;
+      font-size: 14px;
+      line-height: 1.6; /* Space between lines */
+      margin-bottom: 20px; /* MARGIN: Space below description */
+    }
+
+    /* PRICE SECTION */
+    .product-price {
+      display: flex;
+      align-items: center;
+      gap: 10px; /* Space between price elements */
+      margin-bottom: 20px; /* MARGIN: Space below price section */
+    }
+
+    /* CURRENT PRICE */
+    .price-current {
+      font-size: 28px;
+      font-weight: bold;
+      color: #27ae60; /* Green color */
+    }
+
+    /* OLD PRICE (crossed out) */
+    .price-old {
+      font-size: 18px;
+      color: #95a5a6;
+      text-decoration: line-through; /* Strikethrough effect */
+    }
+
+    /* DISCOUNT BADGE */
+    .discount-badge {
+      background-color: #e74c3c; /* Red background */
+      color: white;
+      
+      /* PADDING: Different values for top/bottom and left/right */
+      padding: 5px 10px; /* 5px top/bottom, 10px left/right */
+      
+      border-radius: 20px; /* Very rounded corners */
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    /* BUY BUTTON */
+    .buy-button {
+      width: 100%;
+      
+      /* PADDING: Space inside button around text */
+      padding: 15px; /* 15px on all sides */
+      
+      background-color: #667eea;
+      color: white;
+      
+      /* BORDER: none removes default button border */
+      border: none;
+      
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer; /* Changes cursor to pointing finger */
+      transition: background-color 0.3s ease; /* Smooth color change */
+    }
+
+    /* BUTTON HOVER EFFECT */
+    .buy-button:hover {
+      background-color: #5568d3; /* Darker purple */
+    }
+
+    /* BUTTON ACTIVE EFFECT (when clicking) */
+    .buy-button:active {
+      transform: scale(0.98); /* Slightly shrinks button */
+    }
+
+    /* ============================================ */
+    /* RESPONSIVE DESIGN - Mobile devices */
+    /* ============================================ */
+    @media screen and (max-width: 768px) {
+      
+      /* BODY ON MOBILE */
+      body {
+        padding: 20px 10px; /* PADDING: Less space on mobile */
+      }
+
+      /* PAGE TITLE ON MOBILE */
+      .page-title {
+        font-size: 24px; /* Smaller text */
+        margin-bottom: 30px; /* MARGIN: Less space */
+      }
+
+      /* PRODUCT CARD ON MOBILE */
+      .product-card {
+        max-width: 100%; /* Full width on mobile */
+        margin: 0 10px; /* MARGIN: Small space on sides */
+      }
+
+      /* PRODUCT IMAGE ON MOBILE */
+      .product-image {
+        height: 250px; /* Shorter height */
+      }
+
+      /* PRODUCT INFO ON MOBILE */
+      .product-info {
+        padding: 20px; /* PADDING: Less space inside */
+      }
+
+      /* PRODUCT TITLE ON MOBILE */
+      .product-title {
+        font-size: 20px; /* Smaller text */
+      }
+
+      /* PRICE ON MOBILE */
+      .price-current {
+        font-size: 24px; /* Smaller text */
+      }
+    }
+
+    /* DEMO BOX MODEL SECTION */
+    .box-model-demo {
+      background-color: white;
+      max-width: 800px;
+      margin: 40px auto 0; /* MARGIN: 40px top, auto left/right, 0 bottom */
+      padding: 30px; /* PADDING: Space inside */
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .box-model-demo h3 {
+      color: #2c3e50;
+      margin-bottom: 15px; /* MARGIN: Space below */
+    }
+
+    .box-model-demo p {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 10px; /* MARGIN: Space below paragraphs */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Page heading -->
+    <h1 class="page-title">🛍️ E-Commerce Product Card</h1>
+
+    <!-- PRODUCT CARD -->
+    <div class="product-card">
+      
+      <!-- Product image section -->
+      <div class="product-image">
+        <!-- You can replace this with <img src="your-image.jpg" alt="Product"> -->
+        <div class="product-image-placeholder">
+          🎧
+        </div>
+      </div>
+
+      <!-- Product information section -->
+      <div class="product-info">
+        
+        <!-- Category label -->
+        <div class="product-category">Electronics</div>
+        
+        <!-- Product title -->
+        <h2 class="product-title">Wireless Headphones Pro</h2>
+        
+        <!-- Product description -->
+        <p class="product-description">
+          Premium wireless headphones with active noise cancellation, 
+          30-hour battery life, and crystal-clear sound quality. 
+          Perfect for music lovers and professionals.
+        </p>
+
+        <!-- Price section -->
+        <div class="product-price">
+          <span class="price-current">$129.99</span>
+          <span class="price-old">$199.99</span>
+          <span class="discount-badge">35% OFF</span>
+        </div>
+
+        <!-- Buy button -->
+        <button class="buy-button">🛒 Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Box Model Explanation -->
+    <div class="box-model-demo">
+      <h3>📦 CSS Box Model Explained:</h3>
+      <p><strong>Margin:</strong> Space OUTSIDE the element (creates distance from other elements)</p>
+      <p><strong>Border:</strong> Line around the element (you can see it if you add a border)</p>
+      <p><strong>Padding:</strong> Space INSIDE the element (creates space around content)</p>
+      <p><strong>Content:</strong> The actual text, images, or other content inside</p>
+      <p style="margin-top: 20px;">
+        <strong>💡 Tip:</strong> The product card uses all these properties! 
+        The card has margin to center it, border for the outline, padding for 
+        space inside, and box-shadow for the 3D effect.
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 17: Image Gallery</title>
+  <style>
+    /* ============================================
+       CSS STYLING
+       ============================================ */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 32px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #7f8c8d;
+      margin-bottom: 40px;
+      font-size: 16px;
+    }
+
+    /* Main display area for large image */
+    .main-display {
+      background-color: #f8f9fa;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-image {
+      width: 100%;
+      max-width: 600px;
+      height: 400px;
+      object-fit: cover; /* Makes image fill space nicely */
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .main-image:hover {
+      transform: scale(1.02); /* Slight zoom on hover */
+    }
+
+    .image-title {
+      margin-top: 15px;
+      font-size: 20px;
+      color: #2c3e50;
+      font-weight: bold;
+    }
+
+    /* Thumbnail gallery section */
+    .thumbnails-section {
+      margin-top: 30px;
+    }
+
+    .thumbnails-section h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      font-size: 22px;
+      text-align: center;
+    }
+
+    /* Container for thumbnails - THIS IS WHERE EVENT DELEGATION HAPPENS */
+    .thumbnails-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 12px;
+    }
+
+    /* Individual thumbnail styling */
+    .thumbnail {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer; /* Shows it's clickable */
+      transition: all 0.3s ease;
+      border: 3px solid transparent;
+    }
+
+    /* Hover effect on thumbnails */
+    .thumbnail:hover {
+      transform: scale(1.1); /* Grows when hovering */
+      border-color: #667eea;
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Active/selected thumbnail */
+    .thumbnail.active {
+      border-color: #667eea;
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.6);
+      transform: scale(1.05);
+    }
+
+    /* Info box explaining the code */
+    .info-box {
+      background-color: #e8f4f8;
+      padding: 25px;
+      border-radius: 10px;
+      margin-top: 30px;
+      border-left: 5px solid #3498db;
+    }
+
+    .info-box h3 {
+      color: #2980b9;
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
+
+    .info-box ul {
+      margin: 10px 0;
+      padding-left: 25px;
+      color: #2c3e50;
+      line-height: 1.8;
+    }
+
+    .info-box code {
+      background-color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #e74c3c;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Responsive design */
+    @media screen and (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      .main-image {
+        height: 300px;
+      }
+
+      .thumbnails-container {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 10px;
+      }
+
+      .thumbnail {
+        height: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Page title -->
+    <h1>🖼️ Image Gallery</h1>
+    <p class="subtitle">Click any thumbnail to view larger image</p>
+
+    <!-- ============================================
+         MAIN DISPLAY AREA - Shows selected image
+         ============================================ -->
+    <div class="main-display">
+      <img 
+        id="mainImage" 
+        class="main-image"
+        src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" 
+        alt="Mountain landscape"
+      >
+      <div id="imageTitle" class="image-title">Mountain Landscape</div>
+    </div>
+
+    <!-- ============================================
+         THUMBNAILS SECTION
+         This is where EVENT DELEGATION happens!
+         We add ONE listener to the container, not each thumbnail
+         ============================================ -->
+    <div class="thumbnails-section">
+      <h2>📸 Click to View</h2>
+      
+      <!-- 
+        IMPORTANT: We add event listener to THIS container,
+        not to individual thumbnails!
+        This is EVENT DELEGATION in action.
+      -->
+      <div id="thumbnailsContainer" class="thumbnails-container">
+        
+        <!-- Thumbnail 1 -->
+        <img 
+          class="thumbnail active" 
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200" 
+          alt="Mountain landscape"
+          data-large="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800"
+          data-title="Mountain Landscape"
+        >
+        
+        <!-- Thumbnail 2 -->
+        <img 
+          class="thumbnail" 
+          src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=200" 
+          alt="Forest path"
+          data-large="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800"
+          data-title="Forest Path"
+        >
+        
+        <!-- Thumbnail 3 -->
+        <img 
+          class="thumbnail" 
+          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=200" 
+          alt="Beach sunset"
+          data-large="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800"
+          data-title="Beach Sunset"
+        >
+        
+        <!-- Thumbnail 4 -->
+        <img 
+          class="thumbnail" 
+          src="https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?w=200" 
+          alt="Desert dunes"
+          data-large="https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?w=800"
+          data-title="Desert Dunes"
+        >
+        
+        <!-- Thumbnail 5 -->
+        <img 
+          class="thumbnail" 
+          src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=200" 
+          alt="Snow mountains"
+          data-large="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800"
+          data-title="Snow Mountains"
+        >
+        
+        <!-- Thumbnail 6 -->
+        <img 
+          class="thumbnail" 
+          src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200" 
+          alt="Green valley"
+          data-large="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800"
+          data-title="Green Valley"
+        >
+        
+      </div>
+    </div>
+
+    <!-- Explanation box -->
+    <div class="info-box">
+      <h3>🎓 What You're Learning:</h3>
+      <ul>
+        <li><strong>addEventListener():</strong> Listening for clicks on the container</li>
+        <li><strong>Event Delegation:</strong> ONE listener handles ALL thumbnails (efficient!)</li>
+        <li><strong>event.target:</strong> Identifies which specific thumbnail was clicked</li>
+        <li><strong>data-* attributes:</strong> Store custom data on HTML elements</li>
+        <li><strong>classList:</strong> Add/remove CSS classes dynamically</li>
+      </ul>
+      <p style="margin-top: 15px; font-style: italic;">
+        💡 Open the browser console (F12) to see detailed logs of what's happening!
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ============================================
+       JAVASCRIPT CODE - The Logic
+       ============================================ -->
+  <script>
+    /* ============================================
+       STEP-BY-STEP EXPLANATION:
+       
+       1. Get the container element (parent of all thumbnails)
+       2. Add ONE event listener to the container
+       3. When ANY thumbnail is clicked, the event "bubbles up" to container
+       4. Check if the clicked element is a thumbnail
+       5. Update the main image with the clicked thumbnail's data
+       
+       This is EVENT DELEGATION - much more efficient than
+       adding separate listeners to each thumbnail!
+       ============================================ */
+
+    // STEP 1: Get the elements we need
+    // These are the elements we'll manipulate
+    let mainImage = document.getElementById("mainImage");
+    let imageTitle = document.getElementById("imageTitle");
+    let thumbnailsContainer = document.getElementById("thumbnailsContainer");
+
+    /* EXPLANATION:
+       - mainImage: The large image at the top
+       - imageTitle: The text below the main image
+       - thumbnailsContainer: The parent container holding all thumbnails
+       
+       We get these ONCE at the start, then reuse them.
+       More efficient than calling getElementById repeatedly!
+    */
+
+    // STEP 2: Add event listener to the CONTAINER (not individual thumbnails!)
+    // This is EVENT DELEGATION
+    thumbnailsContainer.addEventListener("click", function(event) {
+      
+      /* EXPLANATION OF EVENT OBJECT:
+         When an event happens, JavaScript creates an "event" object
+         with information about what happened:
+         
+         - event.target: The ACTUAL element that was clicked
+         - event.currentTarget: The element the listener is attached to
+         - event.type: The type of event ("click", "mouseover", etc.)
+         
+         In this case:
+         - event.target = the specific thumbnail clicked
+         - event.currentTarget = thumbnailsContainer (the parent)
+      */
+      
+      // STEP 3: Check if what was clicked is a thumbnail
+      // classList.contains() checks if element has a specific class
+      if (event.target.classList.contains("thumbnail")) {
+        
+        /* WHY THIS CHECK?
+           The container has other things besides thumbnails.
+           We only want to do something if a thumbnail was clicked.
+           
+           Without this check, clicking empty space in the container
+           would cause errors!
+        */
+        
+        console.log("🖱️ Thumbnail clicked!");
+        
+        // STEP 4: Get data from the clicked thumbnail
+        // data-* attributes store custom data on HTML elements
+        let largeImageUrl = event.target.getAttribute("data-large");
+        let imageTitle = event.target.getAttribute("data-title");
+        
+        /* EXPLANATION OF data-* ATTRIBUTES:
+           In HTML: <img data-large="url.jpg" data-title="Title">
+           
+           These are custom attributes you create to store data.
+           Use getAttribute() to read them.
+           
+           - data-large: URL of the full-size image
+           - data-title: Title to display
+           
+           You can name them anything: data-price, data-id, etc.
+        */
+        
+        console.log("📷 Loading image:", imageTitle);
+        
+        // STEP 5: Update the main image
+        mainImage.src = largeImageUrl; // Change the image source
+        
+        /* EXPLANATION:
+           .src is the property that holds the image URL
+           Changing it makes the browser load the new image
+           
+           Like changing a TV channel - same screen, different content!
+        */
+        
+        // STEP 6: Update the title text
+        document.getElementById("imageTitle").textContent = imageTitle;
+        
+        /* EXPLANATION:
+           textContent changes the text inside an element
+           Safe from XSS attacks (unlike innerHTML)
+        */
+        
+        // STEP 7: Update visual styling (show which thumbnail is selected)
+        // Remove "active" class from ALL thumbnails
+        let allThumbnails = document.querySelectorAll(".thumbnail");
+        allThumbnails.forEach(function(thumb) {
+          thumb.classList.remove("active");
+        });
+        
+        /* EXPLANATION:
+           querySelectorAll() finds ALL elements matching the selector
+           Returns a NodeList (like an array)
+           
+           We loop through and remove "active" from each one.
+           This removes the blue border from all thumbnails.
+        */
+        
+        // Add "active" class to the clicked thumbnail
+        event.target.classList.add("active");
+        
+        /* EXPLANATION:
+           classList.add() adds a CSS class
+           This adds the blue border to show it's selected
+           
+           classList methods:
+           - .add("class") - adds class
+           - .remove("class") - removes class
+           - .toggle("class") - adds if missing, removes if present
+           - .contains("class") - checks if class exists
+        */
+        
+        console.log("✅ Image updated successfully!");
+        
+      } else {
+        // Something else in the container was clicked (not a thumbnail)
+        console.log("❌ Not a thumbnail, ignoring click");
+      }
+      
+    });
+
+    /* ============================================
+       WHY EVENT DELEGATION IS AWESOME:
+       
+       WITHOUT Event Delegation:
+       ❌ Add listener to each thumbnail individually
+       ❌ 6 thumbnails = 6 separate event listeners
+       ❌ If we add more thumbnails dynamically, need to add more listeners
+       ❌ More memory usage
+       ❌ More code to maintain
+       
+       WITH Event Delegation:
+       ✅ ONE listener on the container
+       ✅ Works for ALL current thumbnails
+       ✅ Works for thumbnails added LATER (dynamically)
+       ✅ Less memory usage
+       ✅ Cleaner code
+       ✅ Better performance
+       
+       It's like having one receptionist at the front desk
+       instead of one at every single office door!
+       ============================================ */
+
+    /* ============================================
+       BONUS: Event Bubbling Explained
+       
+       When you click a thumbnail, the event doesn't stop there.
+       It "bubbles up" through the DOM tree:
+       
+       1. Click thumbnail (event.target)
+       2. Event goes to thumbnailsContainer (we catch it here!)
+       3. Event goes to container
+       4. Event goes to body
+       5. Event goes to html
+       6. Event goes to document
+       
+       This is why event delegation works!
+       We catch the event as it bubbles up.
+       ============================================ */
+
+    // Log initial setup
+    console.log("🎨 Image gallery initialized!");
+    console.log("📸 Total thumbnails:", document.querySelectorAll(".thumbnail").length);
+    console.log("💡 Try clicking different thumbnails to see them in action!");
+
+    /* ============================================
+       CHALLENGE IDEAS FOR PRACTICE:
+       
+       1. Add a "Next" and "Previous" button to cycle through images
+       2. Add keyboard navigation (arrow keys)
+       3. Add a zoom feature on the main image
+       4. Add image counter (showing "3 of 6")
+       5. Add auto-play slideshow mode
+       6. Add transition animations between images
+       ============================================ */
+  </script>
+
+</body>
+</html>

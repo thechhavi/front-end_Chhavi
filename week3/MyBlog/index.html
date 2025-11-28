@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 8: Flexbox Blog Layout</title>
+  <style>
+    /* ============================================ */
+    /* FLEXBOX EXPLANATION:
+    /* Flexbox is a layout system that makes it easy to:
+    /* - Arrange items in rows or columns
+    /* - Control spacing between items
+    /* - Align items vertically and horizontally
+    /* - Make responsive layouts
+    /* 
+    /* Key concepts:
+    /* - FLEX CONTAINER: Parent element with display: flex
+    /* - FLEX ITEMS: Children elements inside the container
+    /* ============================================ */
+
+    /* RESET - Remove default spacing */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* BODY - Page setup */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+
+    /* CONTAINER - Wrapper for entire page */
+    .container {
+      max-width: 1200px; /* Maximum width on large screens */
+      margin: 0 auto; /* Centers the container */
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .page-header h1 {
+      color: #2c3e50;
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .page-header p {
+      color: #7f8c8d;
+      font-size: 18px;
+    }
+
+    /* ============================================ */
+    /* FLEXBOX CONTAINER - This is where the magic happens!
+    /* ============================================ */
+    .blog-container {
+      /* DISPLAY FLEX: Turns this into a flex container */
+      display: flex;
+      
+      /* FLEX-DIRECTION: Arranges items in a row (side by side) */
+      /* Other options: column (stacked), row-reverse, column-reverse */
+      flex-direction: row;
+      
+      /* GAP: Space between flex items (modern way to add spacing) */
+      gap: 30px; /* 30px space between each blog card */
+      
+      /* FLEX-WRAP: Allows items to wrap to next line if needed */
+      /* nowrap = stay in one line, wrap = move to next line */
+      flex-wrap: wrap;
+      
+      /* JUSTIFY-CONTENT: Controls horizontal alignment */
+      /* center = items centered, space-between = space distributed */
+      justify-content: center;
+    }
+
+    /* ============================================ */
+    /* FLEX ITEMS - Individual blog cards
+    /* ============================================ */
+    .blog-card {
+      /* FLEX: Controls how item grows and shrinks */
+      /* Format: flex-grow flex-shrink flex-basis */
+      /* flex: 1 means each card takes equal space */
+      flex: 1 1 300px; /* Grow, shrink, and minimum width of 300px */
+      
+      /* The above line means:
+         - flex-grow: 1 = Can grow to fill space
+         - flex-shrink: 1 = Can shrink if needed
+         - flex-basis: 300px = Starting width is 300px */
+      
+      background-color: white;
+      border-radius: 12px;
+      overflow: hidden; /* Keeps content inside rounded corners */
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      
+      /* MAX-WIDTH: Prevents cards from getting too wide */
+      max-width: 400px;
+    }
+
+    /* BLOG CARD HOVER EFFECT */
+    .blog-card:hover {
+      transform: translateY(-8px); /* Lifts up */
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Bigger shadow */
+    }
+
+    /* BLOG IMAGE SECTION */
+    .blog-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center; /* Vertically centers content */
+      justify-content: center; /* Horizontally centers content */
+      font-size: 60px;
+    }
+
+    /* BLOG CONTENT SECTION */
+    .blog-content {
+      padding: 25px;
+    }
+
+    /* BLOG CATEGORY BADGE */
+    .blog-category {
+      display: inline-block;
+      background-color: #e8f4f8;
+      color: #3498db;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    /* BLOG TITLE */
+    .blog-title {
+      font-size: 22px;
+      color: #2c3e50;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    /* BLOG DESCRIPTION */
+    .blog-description {
+      color: #7f8c8d;
+      font-size: 15px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    /* BLOG META INFO (author, date) */
+    .blog-meta {
+      /* FLEXBOX: Used here to arrange author and date side by side */
+      display: flex;
+      justify-content: space-between; /* Space items at opposite ends */
+      align-items: center; /* Vertically center items */
+      
+      padding-top: 15px;
+      border-top: 1px solid #ecf0f1;
+      font-size: 13px;
+      color: #95a5a6;
+    }
+
+    /* READ MORE BUTTON */
+    .read-more {
+      display: inline-block;
+      color: #3498db;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: color 0.3s ease;
+    }
+
+    .read-more:hover {
+      color: #2980b9;
+      text-decoration: underline;
+    }
+
+    /* FLEXBOX INFO SECTION */
+    .flexbox-info {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      margin-top: 50px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .flexbox-info h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .flexbox-info h3 {
+      color: #3498db;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .flexbox-info p {
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .flexbox-info code {
+      background-color: #f8f9fa;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e74c3c;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* ============================================ */
+    /* RESPONSIVE DESIGN - Media Queries for Mobile
+    /* ============================================ */
+    @media screen and (max-width: 768px) {
+      
+      /* BODY ON MOBILE */
+      body {
+        padding: 20px 15px;
+      }
+
+      /* PAGE HEADER ON MOBILE */
+      .page-header h1 {
+        font-size: 28px;
+      }
+
+      .page-header p {
+        font-size: 16px;
+      }
+
+      /* BLOG CONTAINER ON MOBILE */
+      .blog-container {
+        /* FLEX-DIRECTION: Change from row to column */
+        /* This stacks the cards vertically instead of side-by-side */
+        flex-direction: column;
+        
+        gap: 20px; /* Less space between cards on mobile */
+      }
+
+      /* BLOG CARD ON MOBILE */
+      .blog-card {
+        /* FLEX: Full width on mobile */
+        flex: 1 1 100%; /* Take full width available */
+        max-width: 100%; /* Remove max-width restriction */
+      }
+
+      /* BLOG IMAGE ON MOBILE */
+      .blog-image {
+        height: 180px; /* Shorter image */
+      }
+
+      /* BLOG CONTENT ON MOBILE */
+      .blog-content {
+        padding: 20px;
+      }
+
+      /* BLOG TITLE ON MOBILE */
+      .blog-title {
+        font-size: 20px;
+      }
+
+      /* FLEXBOX INFO ON MOBILE */
+      .flexbox-info {
+        padding: 20px;
+      }
+
+      .flexbox-info h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- PAGE HEADER -->
+    <header class="page-header">
+      <h1>📝 My Blog</h1>
+      <p>Exploring the world through stories and ideas</p>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- FLEXBOX CONTAINER - Contains 3 blog cards -->
+    <!-- ============================================ -->
+    <div class="blog-container">
+      
+      <!-- BLOG CARD 1 -->
+      <article class="blog-card">
+        <div class="blog-image">🚀</div>
+        <div class="blog-content">
+          <span class="blog-category">Technology</span>
+          <h2 class="blog-title">Getting Started with Web Development</h2>
+          <p class="blog-description">
+            Learn the fundamentals of HTML, CSS, and JavaScript to build 
+            your first website. Perfect for beginners who want to start 
+            their coding journey.
+          </p>
+          <a href="#" class="read-more">Read More →</a>
+          <div class="blog-meta">
+            <span>👤 Sarah Johnson</span>
+            <span>📅 Nov 15, 2024</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- BLOG CARD 2 -->
+      <article class="blog-card">
+        <div class="blog-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          🎨
+        </div>
+        <div class="blog-content">
+          <span class="blog-category">Design</span>
+          <h2 class="blog-title">Modern UI Design Principles</h2>
+          <p class="blog-description">
+            Discover the key principles of creating beautiful and functional 
+            user interfaces. Learn about color theory, typography, and 
+            layout design.
+          </p>
+          <a href="#" class="read-more">Read More →</a>
+          <div class="blog-meta">
+            <span>👤 Mike Chen</span>
+            <span>📅 Nov 18, 2024</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- BLOG CARD 3 -->
+      <article class="blog-card">
+        <div class="blog-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+          💡
+        </div>
+        <div class="blog-content">
+          <span class="blog-category">Tips</span>
+          <h2 class="blog-title">10 Productivity Hacks for Developers</h2>
+          <p class="blog-description">
+            Boost your coding efficiency with these proven productivity tips. 
+            From keyboard shortcuts to time management strategies for 
+            busy developers.
+          </p>
+          <a href="#" class="read-more">Read More →</a>
+          <div class="blog-meta">
+            <span>👤 Emma Williams</span>
+            <span>📅 Nov 20, 2024</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- FLEXBOX EXPLANATION SECTION -->
+    <section class="flexbox-info">
+      <h2>🎯 How Flexbox Works in This Layout</h2>
+      
+      <h3>1. Flex Container (.blog-container)</h3>
+      <p>
+        <code>display: flex</code> - Turns the container into a flexbox<br>
+        <code>flex-direction: row</code> - Items arranged horizontally (side by side)<br>
+        <code>gap: 30px</code> - Adds 30px space between each card<br>
+        <code>flex-wrap: wrap</code> - Items wrap to next line if screen is too narrow
+      </p>
+
+      <h3>2. Flex Items (.blog-card)</h3>
+      <p>
+        <code>flex: 1 1 300px</code> - Each card:<br>
+        • Can grow to fill available space<br>
+        • Can shrink if needed<br>
+        • Has a minimum width of 300px
+      </p>
+
+      <h3>3. Responsive Behavior</h3>
+      <p>
+        On <strong>desktop</strong>: Cards sit side by side in a row<br>
+        On <strong>mobile</strong>: <code>flex-direction: column</code> stacks them vertically
+      </p>
+
+      <h3>💡 Try This!</h3>
+      <p>
+        Resize your browser window to see the cards automatically rearrange! 
+        This is the power of Flexbox - it adapts to different screen sizes 
+        automatically.
+      </p>
+    </section>
+
+  </div>
+
+</body>
+</html>

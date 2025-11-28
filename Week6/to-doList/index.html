@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 16: To-Do List App</title>
+  <style>
+    /* ============================================
+       CSS STYLING - Makes the app look nice
+       ============================================ */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 32px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #7f8c8d;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    /* Input section styling */
+    .input-section {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    #todoInput {
+      flex: 1; /* Takes remaining space */
+      padding: 12px 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    #todoInput:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    #addButton {
+      padding: 12px 25px;
+      background-color: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #addButton:hover {
+      background-color: #5568d3;
+      transform: translateY(-2px);
+    }
+
+    #addButton:active {
+      transform: translateY(0);
+    }
+
+    /* To-Do list styling */
+    #todoList {
+      list-style: none; /* Remove default bullets */
+    }
+
+    /* Individual to-do item styling */
+    .todo-item {
+      background-color: #f8f9fa;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+      border-left: 4px solid #667eea;
+    }
+
+    .todo-item:hover {
+      background-color: #e9ecef;
+      transform: translateX(5px);
+    }
+
+    .todo-text {
+      flex: 1;
+      color: #2c3e50;
+      font-size: 16px;
+      word-break: break-word; /* Handles long text */
+    }
+
+    .delete-button {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .delete-button:hover {
+      background-color: #c0392b;
+      transform: scale(1.05);
+    }
+
+    /* Empty state message */
+    .empty-message {
+      text-align: center;
+      color: #95a5a6;
+      padding: 40px 20px;
+      font-size: 18px;
+    }
+
+    /* Info box explaining DOM methods */
+    .info-box {
+      background-color: #e8f4f8;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 30px;
+      border-left: 5px solid #3498db;
+    }
+
+    .info-box h3 {
+      color: #2980b9;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    .info-box ul {
+      margin: 10px 0;
+      padding-left: 25px;
+      color: #2c3e50;
+      line-height: 1.8;
+    }
+
+    .info-box code {
+      background-color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e74c3c;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- App title -->
+    <h1>✅ To-Do List</h1>
+    <p class="subtitle">Add, view, and delete your tasks</p>
+
+    <!-- ============================================
+         INPUT SECTION - Where user types new tasks
+         ============================================ -->
+    <div class="input-section">
+      <!-- Text input for new task -->
+      <input 
+        type="text" 
+        id="todoInput" 
+        placeholder="Enter a new task..."
+        onkeypress="handleKeyPress(event)"
+      >
+      
+      <!-- Button to add task -->
+      <button id="addButton" onclick="addTodo()">
+        ➕ Add
+      </button>
+    </div>
+
+    <!-- ============================================
+         TO-DO LIST - Where tasks will be displayed
+         This starts empty, we'll add items with JavaScript
+         ============================================ -->
+    <ul id="todoList">
+      <!-- Empty message (shown when no tasks) -->
+      <li class="empty-message">
+        📝 No tasks yet. Add one above!
+      </li>
+    </ul>
+
+    <!-- ============================================
+         INFO BOX - Explains DOM methods used
+         ============================================ -->
+    <div class="info-box">
+      <h3>🔧 DOM Methods Used in This App:</h3>
+      <ul>
+        <li><code>document.getElementById()</code> - Get element by ID</li>
+        <li><code>document.createElement()</code> - Create new HTML element</li>
+        <li><code>element.appendChild()</code> - Add element as child</li>
+        <li><code>element.remove()</code> - Remove element from DOM</li>
+        <li><code>element.textContent</code> - Set/get text inside element</li>
+        <li><code>element.classList</code> - Manage CSS classes</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ============================================
+       JAVASCRIPT CODE - The magic happens here!
+       ============================================ -->
+  <script>
+    /* ============================================
+       DOM MANIPULATION EXPLAINED:
+       
+       The DOM (Document Object Model) is how JavaScript
+       interacts with HTML. Think of it like this:
+       
+       - HTML creates the structure
+       - JavaScript can change that structure
+       - We can add, remove, or modify elements
+       
+       Key concept: Everything is an OBJECT that we
+       can manipulate with JavaScript!
+       ============================================ */
+
+    /* ============================================
+       FUNCTION: addTodo()
+       Purpose: Creates and adds a new to-do item
+       ============================================ */
+    function addTodo() {
+      
+      // STEP 1: Get the input element
+      // getElementById() finds element with id="todoInput"
+      let inputElement = document.getElementById("todoInput");
+      
+      // STEP 2: Get the text value from input
+      // .value gets what user typed
+      // .trim() removes extra spaces from start/end
+      let todoText = inputElement.value.trim();
+      
+      /* EXPLANATION:
+         trim() is important! It removes spaces like:
+         "  hello  " becomes "hello"
+         This prevents empty-looking tasks
+      */
+      
+      // STEP 3: Validate input (check if empty)
+      if (todoText === "") {
+        alert("Please enter a task!"); // Show error message
+        return; // Stop function here (don't add empty task)
+      }
+      
+      // STEP 4: Get the list element where we'll add the task
+      let todoList = document.getElementById("todoList");
+      
+      // STEP 5: Remove empty message if it exists
+      // querySelector finds first element matching the selector
+      let emptyMessage = document.querySelector(".empty-message");
+      if (emptyMessage) {
+        emptyMessage.remove(); // Remove it from DOM
+      }
+      
+      /* EXPLANATION OF querySelector():
+         - Finds first element matching CSS selector
+         - ".empty-message" finds class="empty-message"
+         - "#todoList" would find id="todoList"
+         - "button" would find first <button> tag
+      */
+      
+      // STEP 6: Create the list item (container)
+      // createElement() creates a new HTML element
+      let listItem = document.createElement("li");
+      
+      /* EXPLANATION:
+         createElement("li") creates: <li></li>
+         createElement("div") creates: <div></div>
+         createElement("button") creates: <button></button>
+         
+         At this point, it exists in memory but NOT on the page yet!
+      */
+      
+      // STEP 7: Add CSS class to list item for styling
+      listItem.classList.add("todo-item");
+      
+      /* EXPLANATION OF classList:
+         - classList.add("name") adds a class
+         - classList.remove("name") removes a class
+         - classList.toggle("name") adds if missing, removes if present
+         
+         Now our element is: <li class="todo-item"></li>
+      */
+      
+      // STEP 8: Create a span for the text
+      let textSpan = document.createElement("span");
+      textSpan.classList.add("todo-text");
+      textSpan.textContent = todoText; // Set the text inside
+      
+      /* EXPLANATION OF textContent:
+         - Sets the text inside an element
+         - textContent = "Hello" creates: <span>Hello</span>
+         - Safe from XSS attacks (unlike innerHTML)
+      */
+      
+      // STEP 9: Create delete button
+      let deleteButton = document.createElement("button");
+      deleteButton.classList.add("delete-button");
+      deleteButton.textContent = "🗑️ Delete";
+      
+      // STEP 10: Add click event to delete button
+      // When clicked, call deleteTodo function
+      deleteButton.onclick = function() {
+        deleteTodo(listItem); // Pass the list item to delete
+      };
+      
+      /* EXPLANATION OF onclick:
+         - Assigns a function to run when element is clicked
+         - function() { ... } creates an anonymous function
+         - We pass listItem so deleteTodo knows WHICH item to remove
+         
+         We could also use:
+         deleteButton.addEventListener("click", function() { ... });
+      */
+      
+      // STEP 11: Assemble the pieces
+      // appendChild() adds element as a child
+      listItem.appendChild(textSpan);     // Add text to list item
+      listItem.appendChild(deleteButton); // Add button to list item
+      
+      /* EXPLANATION OF appendChild():
+         - Adds element as LAST child
+         - listItem.appendChild(textSpan) creates:
+           <li class="todo-item">
+             <span class="todo-text">Task text</span>
+           </li>
+         
+         After second appendChild:
+           <li class="todo-item">
+             <span class="todo-text">Task text</span>
+             <button class="delete-button">Delete</button>
+           </li>
+      */
+      
+      // STEP 12: Add the complete item to the list
+      todoList.appendChild(listItem);
+      
+      /* NOW it appears on the page!
+         Before appendChild, it only existed in memory.
+         After appendChild, it's part of the DOM and visible.
+      */
+      
+      // STEP 13: Clear the input field
+      inputElement.value = ""; // Reset to empty string
+      
+      // STEP 14: Focus back on input (for quick adding)
+      inputElement.focus(); // Cursor goes back to input
+      
+      /* EXPLANATION:
+         focus() puts cursor in the element
+         This makes it easy to add multiple tasks quickly!
+      */
+      
+      // STEP 15: Log for learning purposes
+      console.log("✅ Task added:", todoText);
+    }
+
+    /* ============================================
+       FUNCTION: deleteTodo(item)
+       Purpose: Removes a to-do item from the list
+       Parameter: item - the list item element to remove
+       ============================================ */
+    function deleteTodo(item) {
+      
+      // STEP 1: Remove the item from DOM
+      item.remove();
+      
+      /* EXPLANATION OF remove():
+         - Completely removes element from the DOM
+         - It's gone! No longer visible or accessible
+         - Modern method (older way: parent.removeChild(child))
+      */
+      
+      // STEP 2: Get the list to check if it's empty
+      let todoList = document.getElementById("todoList");
+      
+      // STEP 3: Check if list has no children left
+      // children property gives us all child elements
+      if (todoList.children.length === 0) {
+        // List is empty! Show the empty message again
+        
+        // Create empty message
+        let emptyMessage = document.createElement("li");
+        emptyMessage.classList.add("empty-message");
+        emptyMessage.textContent = "📝 No tasks yet. Add one above!";
+        
+        // Add it back to the list
+        todoList.appendChild(emptyMessage);
+      }
+      
+      /* EXPLANATION:
+         children.length tells us how many child elements exist
+         If 0, the list is empty, so we show the empty message
+      */
+      
+      console.log("🗑️ Task deleted");
+    }
+
+    /* ============================================
+       FUNCTION: handleKeyPress(event)
+       Purpose: Add task when user presses Enter key
+       Parameter: event - the keyboard event object
+       ============================================ */
+    function handleKeyPress(event) {
+      // Check if Enter key was pressed
+      // Enter key has code 13 or key "Enter"
+      if (event.key === "Enter") {
+        addTodo(); // Call the add function
+      }
+    }
+    
+    /* EXPLANATION:
+       This makes it so you can press Enter to add tasks
+       instead of clicking the button every time.
+       Much better user experience!
+    */
+
+    /* ============================================
+       KEY DOM CONCEPTS SUMMARY:
+       
+       SELECTING ELEMENTS:
+       - document.getElementById("id") → finds by ID
+       - document.querySelector(".class") → finds by CSS selector
+       - document.querySelectorAll(".class") → finds all matches
+       
+       CREATING ELEMENTS:
+       - document.createElement("tagName") → creates new element
+       
+       MODIFYING ELEMENTS:
+       - element.textContent = "text" → sets text
+       - element.innerHTML = "<b>html</b>" → sets HTML
+       - element.classList.add/remove/toggle → manage classes
+       - element.style.color = "red" → change CSS directly
+       
+       ADDING TO DOM:
+       - parent.appendChild(child) → adds as last child
+       - parent.insertBefore(new, existing) → adds before element
+       
+       REMOVING FROM DOM:
+       - element.remove() → removes element
+       - parent.removeChild(child) → removes child (older way)
+       
+       EVENTS:
+       - element.onclick = function() {} → click handler
+       - element.addEventListener("click", function() {}) → better way
+       
+       PROPERTIES:
+       - element.children → all child elements
+       - element.value → value of input/textarea
+       - element.textContent → text inside element
+       ============================================ */
+
+    /* ============================================
+       BONUS: Let's add some starter tasks for demo!
+       This runs when the page loads
+       ============================================ */
+    
+    // Wait for page to load completely
+    window.onload = function() {
+      console.log("📄 Page loaded! To-Do List ready.");
+      console.log("💡 Try adding tasks and deleting them!");
+      console.log("💡 Press Enter after typing to add quickly!");
+    };
+
+  </script>
+
+</body>
+</html>

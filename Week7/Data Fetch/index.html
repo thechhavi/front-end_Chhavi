@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 18: Simulated Data Fetch</title>
+  <style>
+    /* ============================================
+       CSS STYLING
+       ============================================ */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      padding: 40px 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+      background-color: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 32px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #7f8c8d;
+      margin-bottom: 40px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* Control panel for buttons */
+    .control-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 15px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    }
+
+    .btn-success:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    }
+
+    .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* Status display area */
+    .status-area {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      min-height: 150px;
+      border-left: 5px solid #3498db;
+    }
+
+    .status-text {
+      font-size: 18px;
+      color: #2c3e50;
+      line-height: 1.8;
+      margin: 10px 0;
+    }
+
+    /* Loading spinner animation */
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Data display card */
+    .data-card {
+      background-color: #e8f4f8;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 15px;
+      border-left: 4px solid #3498db;
+    }
+
+    .data-card h3 {
+      color: #2980b9;
+      margin-bottom: 10px;
+    }
+
+    .data-card p {
+      color: #2c3e50;
+      margin: 5px 0;
+      line-height: 1.6;
+    }
+
+    /* Error message styling */
+    .error-message {
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #dc3545;
+      margin-top: 15px;
+    }
+
+    /* Success message styling */
+    .success-message {
+      background-color: #d4edda;
+      color: #155724;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #28a745;
+      margin-top: 15px;
+    }
+
+    /* Info box */
+    .info-box {
+      background-color: #fff3cd;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 30px;
+      border-left: 5px solid #ffc107;
+    }
+
+    .info-box h3 {
+      color: #856404;
+      margin-bottom: 15px;
+    }
+
+    .info-box ul {
+      margin: 10px 0;
+      padding-left: 25px;
+      color: #856404;
+      line-height: 1.8;
+    }
+
+    .info-box code {
+      background-color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #e74c3c;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Timeline display */
+    .timeline {
+      margin-top: 20px;
+    }
+
+    .timeline-item {
+      padding: 10px;
+      margin: 5px 0;
+      background-color: white;
+      border-radius: 5px;
+      border-left: 3px solid #667eea;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .timeline-item span {
+      color: #667eea;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Page title -->
+    <h1>⏰ Async Data Fetch Simulator</h1>
+    <p class="subtitle">
+      Learn how Promises and setTimeout work together to simulate server calls.<br>
+      Click the buttons below to see async JavaScript in action!
+    </p>
+
+    <!-- Control buttons -->
+    <div class="control-panel">
+      <button id="fetchUserBtn" class="btn-primary" onclick="fetchUserData()">
+        👤 Fetch User Data (2s delay)
+      </button>
+      
+      <button id="fetchPostsBtn" class="btn-success" onclick="fetchPostsData()">
+        📝 Fetch Posts Data (3s delay)
+      </button>
+      
+      <button id="fetchErrorBtn" class="btn-danger" onclick="fetchWithError()">
+        ❌ Simulate Error (1.5s delay)
+      </button>
+    </div>
+
+    <!-- Status display area -->
+    <div class="status-area" id="statusArea">
+      <p class="status-text">
+        ℹ️ Click any button above to simulate a server request!
+      </p>
+      <p style="font-size: 14px; color: #7f8c8d; margin-top: 15px;">
+        Watch how the page stays responsive while waiting for data...
+      </p>
+    </div>
+
+    <!-- Timeline of events -->
+    <div id="timeline" class="timeline"></div>
+
+    <!-- Explanation box -->
+    <div class="info-box">
+      <h3>🎓 What You're Learning:</h3>
+      <ul>
+        <li><strong>setTimeout():</strong> Delays code execution (simulates network delay)</li>
+        <li><strong>Promises:</strong> Handle async operations cleanly</li>
+        <li><strong>resolve/reject:</strong> Success or failure outcomes</li>
+        <li><strong>.then():</strong> Runs when promise succeeds</li>
+        <li><strong>.catch():</strong> Runs when promise fails</li>
+        <li><strong>Async nature:</strong> Page stays responsive during delays</li>
+      </ul>
+      <p style="margin-top: 15px; font-style: italic;">
+        💡 Open the browser console (F12) to see detailed logs!
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ============================================
+       JAVASCRIPT CODE - Async Magic
+       ============================================ -->
+  <script>
+    /* ============================================
+       COMPLETE EXPLANATION OF ASYNC JAVASCRIPT
+       ============================================ */
+
+    // Keep track of timeline events
+    let timeline = document.getElementById("timeline");
+    let timelineEvents = [];
+
+    // Helper function to add timeline events
+    function addTimelineEvent(message) {
+      let now = new Date().toLocaleTimeString();
+      timelineEvents.push({ time: now, message: message });
+      
+      let timelineItem = document.createElement("div");
+      timelineItem.className = "timeline-item";
+      timelineItem.innerHTML = `<span>${now}</span> - ${message}`;
+      timeline.appendChild(timelineItem);
+      
+      // Keep only last 10 events
+      if (timelineEvents.length > 10) {
+        timeline.removeChild(timeline.firstChild);
+        timelineEvents.shift();
+      }
+    }
+
+    /* ============================================
+       FUNCTION 1: Fetch User Data (Success Case)
+       
+       This demonstrates:
+       - Creating a Promise
+       - Using setTimeout to simulate delay
+       - Resolving the promise with data
+       - Handling success with .then()
+       ============================================ */
+    
+    function fetchUserData() {
+      console.log("🚀 Starting user data fetch...");
+      addTimelineEvent("🚀 User fetch started");
+      
+      // Get status area to update it
+      let statusArea = document.getElementById("statusArea");
+      
+      // Disable button while loading
+      let button = document.getElementById("fetchUserBtn");
+      button.disabled = true;
+      
+      // Show loading state
+      statusArea.innerHTML = `
+        <p class="status-text">⏳ Loading user data...</p>
+        <div class="spinner"></div>
+        <p style="font-size: 14px; color: #7f8c8d; margin-top: 10px;">
+          Simulating 2 second network delay...
+        </p>
+      `;
+
+      /* ============================================
+         CREATE A PROMISE
+         
+         Syntax: new Promise(function(resolve, reject) { ... })
+         
+         - resolve: Function to call when operation succeeds
+         - reject: Function to call when operation fails
+         
+         The Promise wraps the async operation
+         ============================================ */
+      
+      let userPromise = new Promise(function(resolve, reject) {
+        
+        console.log("⏰ Promise created, starting timeout...");
+        
+        /* setTimeout() simulates network delay
+           In real apps, this would be a fetch() call to a server
+           
+           setTimeout takes:
+           1. A function to run after delay
+           2. Delay in milliseconds (2000 = 2 seconds)
+        */
+        
+        setTimeout(function() {
+          
+          console.log("✅ Timeout finished, resolving promise...");
+          
+          // Simulate successful data retrieval
+          let userData = {
+            id: 1,
+            name: "Sarah Johnson",
+            email: "sarah.j@example.com",
+            role: "Frontend Developer",
+            joinDate: "January 2024"
+          };
+          
+          /* RESOLVE the promise with data
+             This means: "Operation succeeded! Here's the data."
+             
+             Whatever you pass to resolve() becomes available
+             in the .then() handler
+          */
+          resolve(userData);
+          
+        }, 2000); // 2000ms = 2 seconds
+        
+        /* IMPORTANT: This function returns immediately!
+           It doesn't wait for setTimeout to finish.
+           That's what makes it ASYNCHRONOUS.
+           
+           The code after this function keeps running
+           while we wait for the timeout.
+        */
+      });
+
+      /* ============================================
+         HANDLE THE PROMISE RESULT
+         
+         .then() runs when promise is RESOLVED (success)
+         .catch() runs when promise is REJECTED (error)
+         ============================================ */
+      
+      userPromise
+        .then(function(data) {
+          // This runs when resolve() is called (after 2 seconds)
+          
+          console.log("🎉 Promise resolved! Data received:", data);
+          addTimelineEvent("✅ User data loaded successfully");
+          
+          // Display the data
+          statusArea.innerHTML = `
+            <div class="success-message">
+              ✅ User data loaded successfully!
+            </div>
+            <div class="data-card">
+              <h3>👤 User Information</h3>
+              <p><strong>ID:</strong> ${data.id}</p>
+              <p><strong>Name:</strong> ${data.name}</p>
+              <p><strong>Email:</strong> ${data.email}</p>
+              <p><strong>Role:</strong> ${data.role}</p>
+              <p><strong>Joined:</strong> ${data.joinDate}</p>
+            </div>
+          `;
+          
+          // Re-enable button
+          button.disabled = false;
+        })
+        .catch(function(error) {
+          // This runs if reject() is called (error case)
+          
+          console.log("❌ Promise rejected! Error:", error);
+          addTimelineEvent("❌ Error loading user data");
+          
+          statusArea.innerHTML = `
+            <div class="error-message">
+              ❌ Error: ${error}
+            </div>
+          `;
+          
+          button.disabled = false;
+        });
+
+      /* NOTICE: This line runs IMMEDIATELY!
+         It doesn't wait for the promise to resolve.
+         That's asynchronous programming!
+      */
+      console.log("📝 Promise created and handlers attached. Moving on...");
+      addTimelineEvent("📝 Waiting for response...");
+    }
+
+    /* ============================================
+       FUNCTION 2: Fetch Posts Data (Different Data)
+       
+       Same pattern, different data and timing
+       ============================================ */
+    
+    function fetchPostsData() {
+      console.log("🚀 Starting posts data fetch...");
+      addTimelineEvent("🚀 Posts fetch started");
+      
+      let statusArea = document.getElementById("statusArea");
+      let button = document.getElementById("fetchPostsBtn");
+      button.disabled = true;
+      
+      statusArea.innerHTML = `
+        <p class="status-text">⏳ Loading posts data...</p>
+        <div class="spinner"></div>
+        <p style="font-size: 14px; color: #7f8c8d; margin-top: 10px;">
+          Simulating 3 second network delay...
+        </p>
+      `;
+
+      // Create promise with different delay (3 seconds)
+      let postsPromise = new Promise(function(resolve, reject) {
+        
+        setTimeout(function() {
+          
+          // Simulate array of posts
+          let postsData = [
+            { id: 1, title: "Learning JavaScript", likes: 42 },
+            { id: 2, title: "Async Programming Guide", likes: 38 },
+            { id: 3, title: "Promises Explained", likes: 55 }
+          ];
+          
+          resolve(postsData);
+          
+        }, 3000); // 3 seconds
+      });
+
+      // Handle the result
+      postsPromise
+        .then(function(posts) {
+          console.log("🎉 Posts data received:", posts);
+          addTimelineEvent("✅ Posts loaded successfully");
+          
+          // Build HTML for posts
+          let postsHTML = posts.map(function(post) {
+            return `
+              <p><strong>📝 ${post.title}</strong> - ❤️ ${post.likes} likes</p>
+            `;
+          }).join("");
+          
+          statusArea.innerHTML = `
+            <div class="success-message">
+              ✅ Posts data loaded successfully!
+            </div>
+            <div class="data-card">
+              <h3>📝 Recent Posts (${posts.length})</h3>
+              ${postsHTML}
+            </div>
+          `;
+          
+          button.disabled = false;
+        })
+        .catch(function(error) {
+          console.log("❌ Error:", error);
+          statusArea.innerHTML = `
+            <div class="error-message">❌ Error: ${error}</div>
+          `;
+          button.disabled = false;
+        });
+    }
+
+    /* ============================================
+       FUNCTION 3: Simulate Error (Reject Case)
+       
+       This demonstrates what happens when something goes wrong
+       ============================================ */
+    
+    function fetchWithError() {
+      console.log("🚀 Starting request that will fail...");
+      addTimelineEvent("🚀 Request started (will fail)");
+      
+      let statusArea = document.getElementById("statusArea");
+      let button = document.getElementById("fetchErrorBtn");
+      button.disabled = true;
+      
+      statusArea.innerHTML = `
+        <p class="status-text">⏳ Loading data...</p>
+        <div class="spinner"></div>
+        <p style="font-size: 14px; color: #7f8c8d; margin-top: 10px;">
+          Simulating 1.5 second delay before error...
+        </p>
+      `;
+
+      // Create promise that will be rejected
+      let errorPromise = new Promise(function(resolve, reject) {
+        
+        setTimeout(function() {
+          
+          /* REJECT the promise
+             This simulates an error (network failure, server error, etc.)
+             
+             Whatever you pass to reject() becomes the error
+             available in .catch()
+          */
+          reject("Server connection failed! (404)");
+          
+        }, 1500); // 1.5 seconds
+      });
+
+      // Handle the error
+      errorPromise
+        .then(function(data) {
+          // This won't run because we rejected the promise
+          console.log("This won't execute");
+        })
+        .catch(function(error) {
+          // This WILL run because promise was rejected
+          
+          console.log("❌ Caught error:", error);
+          addTimelineEvent("❌ Request failed: " + error);
+          
+          statusArea.innerHTML = `
+            <div class="error-message">
+              <strong>❌ Request Failed</strong>
+              <p style="margin-top: 10px;">${error}</p>
+              <p style="margin-top: 10px; font-size: 14px;">
+                In a real app, you would retry or show a user-friendly message.
+              </p>
+            </div>
+          `;
+          
+          button.disabled = false;
+        });
+    }
+
+    /* ============================================
+       KEY CONCEPTS SUMMARY:
+       
+       PROMISES:
+       - Represent future values (data that will arrive later)
+       - Three states: Pending → Fulfilled/Rejected
+       - Created with: new Promise((resolve, reject) => {})
+       
+       RESOLVE vs REJECT:
+       - resolve(data): Call when operation succeeds
+       - reject(error): Call when operation fails
+       
+       THEN vs CATCH:
+       - .then(data => {}): Runs when resolved (success)
+       - .catch(error => {}): Runs when rejected (failure)
+       
+       setTimeout():
+       - Delays code execution
+       - setTimeout(function, delayMs)
+       - Doesn't block other code (async!)
+       
+       WHY PROMISES OVER CALLBACKS:
+       - Cleaner code (no callback hell)
+       - Better error handling
+       - Can chain multiple operations
+       - More readable and maintainable
+       
+       REAL-WORLD USAGE:
+       - Fetching data from APIs
+       - Reading files
+       - Database queries
+       - Any operation that takes time
+       ============================================ */
+
+    // Initialize
+    console.log("📄 Page loaded! Try clicking the buttons.");
+    addTimelineEvent("📄 Application initialized");
+
+    /* ============================================
+       BONUS: Promise Chaining Example
+       
+       You can chain multiple .then() calls:
+       ============================================ */
+    
+    function demonstrateChaining() {
+      new Promise((resolve) => {
+        setTimeout(() => resolve(5), 1000);
+      })
+        .then(result => {
+          console.log(result); // 5
+          return result * 2;
+        })
+        .then(result => {
+          console.log(result); // 10
+          return result * 2;
+        })
+        .then(result => {
+          console.log(result); // 20
+        });
+    }
+
+    /* ============================================
+       MODERN ALTERNATIVE: async/await
+       
+       Newer syntax for the same concept:
+       ============================================ */
+    
+    async function modernFetch() {
+      try {
+        let promise = new Promise((resolve) => {
+          setTimeout(() => resolve("Data!"), 2000);
+        });
+        
+        let result = await promise; // Wait for promise
+        console.log(result);
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    }
+    
+    // This is more readable but does the same thing as .then()/.catch()
+
+  </script>
+
+</body>
+</html>

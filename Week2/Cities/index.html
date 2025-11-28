@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 5 Cities to Visit</title>
+    
+    <style>
+        /* ============================================
+           GENERAL PAGE STYLING
+           ============================================ */
+        
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            /* Creates a beautiful gradient background */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* ============================================
+           CONTAINER WITH GLASS EFFECT
+           ============================================ */
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95); /* Semi-transparent white */
+            backdrop-filter: blur(10px); /* Blurs the background behind */
+            padding: 50px;
+            border-radius: 25px;
+            /* Creates multiple shadows for depth */
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                0 2px 8px rgba(255, 255, 255, 0.5) inset;
+            max-width: 700px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* ============================================
+           HEADING STYLING WITH GRADIENT TEXT
+           ============================================ */
+        
+        h1 {
+            /* Creates gradient text effect */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text; /* Clips background to text */
+            -webkit-text-fill-color: transparent; /* Makes text transparent */
+            background-clip: text;
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        /* Adds airplane emoji before heading */
+        h1::before {
+            content: "✈️ ";
+            -webkit-text-fill-color: initial; /* Shows emoji in normal color */
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        
+        /* ============================================
+           ORDERED LIST STYLING
+           Custom number styling with counter
+           ============================================ */
+        
+        ol {
+            list-style: none; /* Removes default numbers */
+            padding: 0;
+            margin: 0;
+            counter-reset: city-counter; /* Creates a custom counter named "city-counter" */
+        }
+        
+        /* ELEMENT SELECTOR: Styles ALL list items */
+        li {
+            counter-increment: city-counter; /* Increases counter by 1 for each item */
+            position: relative; /* Needed for positioning the custom number */
+            padding: 25px 25px 25px 80px; /* Extra left padding for the number circle */
+            margin: 20px 0;
+            background: white;
+            border-radius: 15px;
+            /* Creates a beautiful shadow */
+            box-shadow: 
+                0 5px 20px rgba(0, 0, 0, 0.08),
+                0 2px 5px rgba(0, 0, 0, 0.05);
+            /* Smooth transition for hover effects */
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Border that will change color on hover */
+            border: 2px solid transparent;
+        }
+        
+        /* PSEUDO-ELEMENT: Creates custom number circle using ::before */
+        li::before {
+            content: counter(city-counter); /* Displays the counter number */
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%); /* Centers vertically */
+            width: 45px;
+            height: 45px;
+            /* Creates a circular gradient background */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            /* Centers the number inside the circle */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%; /* Makes it circular */
+            font-weight: bold;
+            font-size: 1.3em;
+            /* Shadow for the number circle */
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* PSEUDO-CLASS: Hover effect for list items */
+        li:hover {
+            transform: translateY(-5px) scale(1.02); /* Lifts up and slightly grows */
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.15),
+                0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: #667eea; /* Purple border appears */
+        }
+        
+        /* Changes number circle on hover */
+        li:hover::before {
+            transform: translateY(-50%) rotate(360deg); /* Spins the number! */
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); /* Pink gradient */
+            box-shadow: 0 5px 15px rgba(240, 147, 251, 0.5);
+        }
+        
+        /* ============================================
+           DIFFERENT COLORS FOR EACH CITY
+           Using :nth-child pseudo-class
+           ============================================ */
+        
+        /* First city - Blue theme */
+        li:nth-child(1) {
+            border-left: 5px solid #3498db;
+        }
+        
+        li:nth-child(1)::before {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.4);
+        }
+        
+        /* Second city - Green theme */
+        li:nth-child(2) {
+            border-left: 5px solid #2ecc71;
+        }
+        
+        li:nth-child(2)::before {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            box-shadow: 0 3px 10px rgba(46, 204, 113, 0.4);
+        }
+        
+        /* Third city - Orange theme */
+        li:nth-child(3) {
+            border-left: 5px solid #f39c12;
+        }
+        
+        li:nth-child(3)::before {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            box-shadow: 0 3px 10px rgba(243, 156, 18, 0.4);
+        }
+        
+        /* Fourth city - Red theme */
+        li:nth-child(4) {
+            border-left: 5px solid #e74c3c;
+        }
+        
+        li:nth-child(4)::before {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.4);
+        }
+        
+        /* Fifth city - Purple theme */
+        li:nth-child(5) {
+            border-left: 5px solid #9b59b6;
+        }
+        
+        li:nth-child(5)::before {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            box-shadow: 0 3px 10px rgba(155, 89, 182, 0.4);
+        }
+        
+        /* ============================================
+           CITY NAME AND DESCRIPTION STYLING
+           ============================================ */
+        
+        .city-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        /* PSEUDO-ELEMENT: Adds decorative line after city name */
+        .city-name::after {
+            content: "";
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea 0%, transparent 100%);
+            margin-top: 8px;
+            border-radius: 2px;
+        }
+        
+        .city-description {
+            color: #7f8c8d;
+            line-height: 1.6;
+            font-size: 1em;
+        }
+        
+        /* PSEUDO-ELEMENT: Makes first letter of description larger */
+        .city-description::first-letter {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        /* ============================================
+           FOOTER NOTE
+           ============================================ */
+        
+        .note {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            color: #5e35b1;
+            font-weight: 500;
+        }
+        
+        /* Adds sparkle emoji using ::before */
+        .note::before {
+            content: "✨ ";
+        }
+        
+        /* Adds sparkle emoji using ::after */
+        .note::after {
+            content: " ✨";
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        
+        <!-- Heading with gradient text effect -->
+        <h1>Top 5 Cities to Visit</h1>
+        <p class="subtitle">My dream travel destinations around the world</p>
+        
+        <!-- ORDERED LIST with custom styling -->
+        <ol>
+            
+            <!-- Each list item has custom number and styling -->
+            <li>
+                <span class="city-name">Paris, France 🇫🇷</span>
+                <p class="city-description">
+                    Known as the City of Light, Paris enchants visitors with its iconic 
+                    Eiffel Tower, world-class museums like the Louvre, and charming cafés 
+                    along cobblestone streets.
+                </p>
+            </li>
+            
+            <li>
+                <span class="city-name">Tokyo, Japan 🇯🇵</span>
+                <p class="city-description">
+                    A mesmerizing blend of ancient tradition and cutting-edge technology, 
+                    Tokyo offers everything from serene temples to neon-lit streets and 
+                    incredible cuisine.
+                </p>
+            </li>
+            
+            <li>
+                <span class="city-name">New York City, USA 🇺🇸</span>
+                <p class="city-description">
+                    The city that never sleeps captivates with its towering skyscrapers, 
+                    Broadway shows, diverse neighborhoods, and the iconic Statue of Liberty 
+                    welcoming all.
+                </p>
+            </li>
+            
+            <li>
+                <span class="city-name">Barcelona, Spain 🇪🇸</span>
+                <p class="city-description">
+                    Famous for Gaudí's stunning architecture, beautiful beaches, vibrant 
+                    nightlife, and delicious tapas, Barcelona perfectly balances art, 
+                    culture, and Mediterranean charm.
+                </p>
+            </li>
+            
+            <li>
+                <span class="city-name">Sydney, Australia 🇦🇺</span>
+                <p class="city-description">
+                    Home to the iconic Opera House and Harbour Bridge, Sydney dazzles with 
+                    its pristine beaches, outdoor lifestyle, and multicultural food scene 
+                    in a stunning harbor setting.
+                </p>
+            </li>
+            
+        </ol>
+        
+        <div class="note">
+            Hover over each city to see the magical animation effects!
+        </div>
+        
+    </div>
+
+</body>
+</html>

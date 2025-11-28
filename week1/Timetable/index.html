@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Beautiful Weekly Timetable</title>
+    
+    <style>
+        /* ============================================
+           GENERAL STYLING FOR THE PAGE
+           ============================================ */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Makes sizing easier to manage */
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); /* Soft gradient background */
+            padding: 40px 20px;
+            min-height: 100vh; /* Takes full viewport height */
+        }
+        
+        /* ============================================
+           CONTAINER FOR CENTERING THE CONTENT
+           ============================================ */
+        
+        .container {
+            max-width: 1200px; /* Maximum width for large screens */
+            margin: 0 auto; /* Centers the container */
+            background: white;
+            padding: 30px;
+            border-radius: 20px; /* Rounded corners for the container */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+        }
+        
+        /* ============================================
+           HEADER STYLING
+           ============================================ */
+        
+        h1 {
+            text-align: center;
+            color: #5e35b1; /* Deep purple color */
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7e57c2; /* Lighter purple */
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        /* ============================================
+           TABLE STYLING
+           ============================================ */
+        
+        table {
+            width: 100%; /* Takes full width of container */
+            border-collapse: collapse; /* Removes spacing between cells */
+            margin: 20px 0;
+            overflow: hidden; /* Helps with rounded corners */
+            border-radius: 12px; /* Rounded corners for the table */
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); /* Soft shadow */
+        }
+        
+        /* ============================================
+           TABLE HEADER (THEAD) STYLING
+           ============================================ */
+        
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Purple gradient */
+        }
+        
+        thead th {
+            color: white;
+            font-weight: 600;
+            font-size: 1.1em;
+            padding: 18px 15px;
+            text-transform: uppercase; /* Makes text UPPERCASE */
+            letter-spacing: 1px; /* Adds space between letters */
+            border: none;
+        }
+        
+        /* First column header (Time) gets special styling */
+        thead th:first-child {
+            background: rgba(0, 0, 0, 0.1); /* Slightly darker */
+            border-top-left-radius: 12px; /* Rounded top-left corner */
+        }
+        
+        thead th:last-child {
+            border-top-right-radius: 12px; /* Rounded top-right corner */
+        }
+        
+        /* ============================================
+           TABLE BODY (TBODY) STYLING
+           ============================================ */
+        
+        tbody td {
+            padding: 20px 15px;
+            text-align: center;
+            border: 1px solid #e0e0e0; /* Light gray borders */
+            transition: all 0.3s ease; /* Smooth transitions for hover effects */
+        }
+        
+        /* Time column gets special background */
+        tbody td:first-child {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%); /* Peach gradient */
+            font-weight: 600;
+            color: #2d3436; /* Dark gray text */
+        }
+        
+        /* ============================================
+           SOFT PASTEL COLORS FOR EACH DAY
+           ============================================ */
+        
+        /* Monday - Soft Blue */
+        tbody tr td:nth-child(2) {
+            background-color: #e3f2fd; /* Light blue */
+        }
+        
+        /* Tuesday - Soft Green */
+        tbody tr td:nth-child(3) {
+            background-color: #e8f5e9; /* Light green */
+        }
+        
+        /* Wednesday - Lavender */
+        tbody tr td:nth-child(4) {
+            background-color: #f3e5f5; /* Light lavender */
+        }
+        
+        /* Thursday - Peach */
+        tbody tr td:nth-child(5) {
+            background-color: #fff3e0; /* Light peach */
+        }
+        
+        /* Friday - Soft Pink */
+        tbody tr td:nth-child(6) {
+            background-color: #fce4ec; /* Light pink */
+        }
+        
+        /* ============================================
+           HOVER EFFECTS (INTERACTIVE!)
+           ============================================ */
+        
+        tbody tr:hover {
+            transform: scale(1.02); /* Slightly enlarges the row */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Adds shadow on hover */
+        }
+        
+        tbody tr:hover td {
+            filter: brightness(0.95); /* Slightly darkens cells on hover */
+            cursor: pointer; /* Changes cursor to pointer */
+        }
+        
+        /* ============================================
+           LUNCH BREAK SPECIAL STYLING
+           ============================================ */
+        
+        .lunch-break {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%) !important; /* Orange gradient */
+            font-weight: bold;
+            color: #d63031; /* Red text */
+            font-size: 1.1em;
+        }
+        
+        /* ============================================
+           FREE PERIOD STYLING
+           ============================================ */
+        
+        .free-period {
+            background-color: #e0f7fa !important; /* Very light cyan */
+            color: #00695c; /* Teal text */
+            font-style: italic;
+        }
+        
+        /* ============================================
+           TABLE FOOTER (TFOOT) STYLING
+           ============================================ */
+        
+        tfoot {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%); /* Purple gradient */
+        }
+        
+        tfoot td {
+            color: white;
+            font-weight: 500;
+            padding: 18px;
+            text-align: center;
+            border: none;
+            border-bottom-left-radius: 12px; /* Rounded bottom corners */
+            border-bottom-right-radius: 12px;
+        }
+        
+        /* ============================================
+           COURSE NAME AND ROOM STYLING
+           ============================================ */
+        
+        .course-name {
+            font-weight: 600;
+            color: #2c3e50; /* Dark blue-gray */
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .room-info {
+            font-size: 0.85em;
+            color: #7f8c8d; /* Gray */
+            font-style: italic;
+        }
+        
+        /* ============================================
+           INSTRUCTORS SECTION
+           ============================================ */
+        
+        .instructors-section {
+            margin-top: 40px;
+            padding: 25px;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%); /* Light pink gradient */
+            border-radius: 15px;
+            border-left: 5px solid #e91e63; /* Pink accent border */
+        }
+        
+        .instructors-section h2 {
+            color: #c2185b; /* Dark pink */
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .instructors-section ul {
+            list-style: none; /* Removes default bullets */
+            padding-left: 0;
+        }
+        
+        .instructors-section li {
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
+        
+        .instructors-section li:hover {
+            transform: translateX(10px); /* Slides to the right on hover */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* ============================================
+           RESPONSIVE DESIGN (FOR MOBILE PHONES)
+           ============================================ */
+        
+        @media screen and (max-width: 768px) {
+            /* When screen is smaller than 768px */
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            table {
+                font-size: 0.85em; /* Smaller text on mobile */
+            }
+            
+            thead th,
+            tbody td,
+            tfoot td {
+                padding: 12px 8px; /* Less padding on mobile */
+            }
+            
+            tbody tr:hover {
+                transform: none; /* Removes hover scale effect on mobile */
+            }
+        }
+        
+        /* For very small screens (phones in portrait) */
+        @media screen and (max-width: 480px) {
+            table {
+                font-size: 0.75em;
+            }
+            
+            thead th,
+            tbody td {
+                padding: 8px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- CONTAINER: Wraps everything for better centering and styling -->
+    <div class="container">
+        
+        <h1>📚 My Weekly Academic Timetable</h1>
+        <p class="subtitle">Spring Semester 2024 - Computer Science Department</p>
+
+        <!-- TABLE: The main timetable structure -->
+        <table>
+            
+            <!-- THEAD: Table header with day names -->
+            <thead>
+                <tr>
+                    <th>⏰ Time</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                </tr>
+            </thead>
+
+            <!-- TBODY: Main timetable data -->
+            <tbody>
+                
+                <!-- Row 1: 9:00 AM - 10:30 AM -->
+                <tr>
+                    <td>9:00 AM<br>10:30 AM</td>
+                    <td>
+                        <span class="course-name">Web Development</span>
+                        <span class="room-info">Room 301</span>
+                    </td>
+                    <td>
+                        <span class="course-name">Data Structures</span>
+                        <span class="room-info">Room 205</span>
+                    </td>
+                    <td>
+                        <span class="course-name">Web Development</span>
+                        <span class="room-info">Room 301</span>
+                    </td>
+                    <td>
+                        <span class="course-name">Database Systems</span>
+                        <span class="room-info">Lab 102</span>
+                    </td>
+                    <td>
+                        <span class="course-name">Web Development</span>
+                        <span class="room-info">Room 301</span>
+                    </td>
+                </tr>
+
+                <!-- Row 2: 10:45 AM - 12:15 PM -->
+                <tr>
+                    <td>10:45 AM<br>12:15 PM</td>
+                    <td>
+                        <span class="course-name">Database Systems</span>
+                        <span class="room-info">Room 402</span>
+                    </td>
+                    <td>
+                        <span class="course-name">Operating Systems</span>
+                        <span class="room-info">Room 303</span>
+                    </td>
+                    <td>
+                        <span class="course-name">Data Structures</span>
+                        <span class="room-info">Lab 201</span>
+                    </td>
+                    <td>
+                        <span class="course-name">Operating Systems</span>
+                        <span class="room-info">Room 303</span>
+                    </td>
+                    <td>
+                        <span class="course-name">UI/UX Design</span>
+                        <span class="room-info">Room 105</span>
+                    </td>
+                </tr>
+
+                <!-- Row 3: Lunch Break (spans all days) -->
+                <tr>
+                    <td>12:15 PM<br>1:15 PM</td>
+                    <td colspan="5" class="lunch-break">
+                        🍽️ Lunch Break 🍽️
+                    </td>
+                </tr>
+
+                <!-- Row 4: 1:15 PM - 2:45 PM -->
+                <tr>
+                    <td>1:15 PM<br>2:45 PM</td>
+                    <td>
+                        <span class="course-name">Algorithm Design</span>
+                        <span class="room-info">Room 210</span>
+                    </td>
+                    <td class="free-period">
+                        Free Period ☕
+                    </td>
+                    <td>
+                        <span class="course-name">Algorithm Design</span>
+                        <span class="room-info">Room 210</span>
+                    </td>
+                    <td>
+                        <span class="course-name">Data Structures</span>
+                        <span class="room-info">Room 205</span>
+                    </td>
+                    <td>
+                        <span class="course-name">Project Work</span>
+                        <span class="room-info">Lab 301</span>
+                    </td>
+                </tr>
+
+                <!-- Row 5: 3:00 PM - 4:30 PM -->
+                <tr>
+                    <td>3:00 PM<br>4:30 PM</td>
+                    <td>
+                        <span class="course-name">Web Dev Lab</span>
+                        <span class="room-info">Lab 102</span>
+                    </td>
+                    <td>
+                        <span class="course-name">Computer Networks</span>
+                        <span class="room-info">Room 308</span>
+                    </td>
+                    <td>
+                        <span class="course-name">Computer Networks</span>
+                        <span class="room-info">Room 308</span>
+                    </td>
+                    <td class="free-period">
+                        Free Period ☕
+                    </td>
+                    <td>
+                        <span class="course-name">Tech Seminar</span>
+                        <span class="room-info">Auditorium</span>
+                    </td>
+                </tr>
+
+            </tbody>
+
+            <!-- TFOOT: Footer with additional information -->
+            <tfoot>
+                <tr>
+                    <td colspan="6">
+                        💡 Office Hours: Monday & Wednesday 4:30 PM - 5:30 PM | Room 405
+                    </td>
+                </tr>
+            </tfoot>
+
+        </table>
+
+        <!-- INSTRUCTORS SECTION -->
+        <div class="instructors-section">
+            <h2>👨‍🏫 Course Instructors</h2>
+            <ul>
+                <li><strong>Web Development:</strong> Prof. Sarah Johnson 📧 sarah.j@university.edu</li>
+                <li><strong>Data Structures:</strong> Dr. Michael Chen 📧 m.chen@university.edu</li>
+                <li><strong>Database Systems:</strong> Prof. Emily Rodriguez 📧 emily.r@university.edu</li>
+                <li><strong>Operating Systems:</strong> Dr. Robert Kim 📧 robert.k@university.edu</li>
+                <li><strong>Algorithm Design:</strong> Prof. Amanda White 📧 amanda.w@university.edu</li>
+                <li><strong>Computer Networks:</strong> Dr. James Brown 📧 james.b@university.edu</li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+</html>

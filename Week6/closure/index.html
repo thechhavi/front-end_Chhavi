@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 15: Functions & Closures</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .intro {
+      text-align: center;
+      color: #555;
+      margin-bottom: 40px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .question-card {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 10px;
+      margin: 25px 0;
+      border-left: 5px solid #667eea;
+    }
+
+    .question-card h2 {
+      color: #667eea;
+      margin-bottom: 15px;
+      font-size: 22px;
+    }
+
+    .question {
+      background-color: #fff3cd;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      color: #856404;
+      font-weight: bold;
+      border-left: 4px solid #ffc107;
+    }
+
+    .explanation {
+      background-color: #e8f4f8;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      color: #2c3e50;
+      line-height: 1.8;
+    }
+
+    .code-block {
+      background-color: #2c3e50;
+      color: #2ecc71;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      margin: 15px 0;
+      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .output-box {
+      background-color: #d4edda;
+      border: 2px solid #28a745;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      color: #155724;
+      font-family: 'Courier New', monospace;
+    }
+
+    .key-concept {
+      background-color: #d1ecf1;
+      border-left: 5px solid #17a2b8;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 5px;
+    }
+
+    .key-concept h4 {
+      color: #0c5460;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px 5px 10px 0;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #5568d3;
+      transform: translateY(-2px);
+    }
+
+    .demo-output {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      border: 2px dashed #667eea;
+      min-height: 50px;
+    }
+
+    .analogy {
+      background-color: #fff3cd;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      border-left: 4px solid #ffc107;
+    }
+
+    .analogy strong {
+      color: #856404;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>📚 Task 15: JavaScript Functions, Closures & IIFE</h1>
+    <div class="intro">
+      Master these interview topics with clear examples and explanations!<br>
+      Each concept is explained with real-world analogies. 🎯
+    </div>
+
+    <!-- ============================================ -->
+    <!-- QUESTION 1: Basic Functions -->
+    <!-- ============================================ -->
+    <div class="question-card">
+      <h2>Question 1️⃣: What are Functions and Different Ways to Create Them?</h2>
+      
+      <div class="question">
+        💬 Interviewer: "Explain JavaScript functions and show me 3 different ways to create them."
+      </div>
+
+      <div class="explanation">
+        <strong>Answer:</strong> A function is a reusable block of code that performs a specific task. 
+        Think of it like a recipe - you write it once, then use it whenever you need it!
+      </div>
+
+      <div class="analogy">
+        <strong>🏠 Real-world analogy:</strong> A function is like a coffee machine. You put in ingredients (parameters), 
+        press a button (call the function), and get coffee (return value). You don't need to know HOW it works inside, 
+        just how to use it!
+      </div>
+
+      <div class="code-block">
+/* ============================================
+   METHOD 1: FUNCTION DECLARATION
+   - Most common way
+   - Can be called before it's defined (hoisting)
+   ============================================ */
+
+function greet(name) {
+  // Parameters: name (input)
+  return "Hello, " + name + "!"; // Return value (output)
+}
+
+// Calling the function
+console.log(greet("Sarah")); // Output: "Hello, Sarah!"
+
+
+/* ============================================
+   METHOD 2: FUNCTION EXPRESSION
+   - Function assigned to a variable
+   - CANNOT be called before definition
+   ============================================ */
+
+let sayGoodbye = function(name) {
+  return "Goodbye, " + name + "!";
+};
+
+console.log(sayGoodbye("John")); // Output: "Goodbye, John!"
+
+
+/* ============================================
+   METHOD 3: ARROW FUNCTION (ES6+)
+   - Shorter syntax
+   - Modern JavaScript way
+   ============================================ */
+
+let multiply = (a, b) => {
+  return a * b;
+};
+
+// Even shorter (one-liner, implicit return)
+let add = (a, b) => a + b;
+
+console.log(multiply(5, 3)); // Output: 15
+console.log(add(10, 20));    // Output: 30
+      </div>
+
+      <button onclick="demoQuestion1()">▶️ Run Demo</button>
+      <div id="output1" class="demo-output"></div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- QUESTION 2: Function Scope -->
+    <!-- ============================================ -->
+    <div class="question-card">
+      <h2>Question 2️⃣: What is Function Scope?</h2>
+      
+      <div class="question">
+        💬 Interviewer: "Explain function scope with an example. What's the difference between local and global variables?"
+      </div>
+
+      <div class="explanation">
+        <strong>Answer:</strong> Scope determines where variables can be accessed. Variables defined inside a function 
+        are LOCAL (only accessible inside that function). Variables defined outside are GLOBAL (accessible everywhere).
+      </div>
+
+      <div class="analogy">
+        <strong>🏠 Real-world analogy:</strong> Think of scope like rooms in a house. 
+        <ul style="margin: 10px 0; padding-left: 20px;">
+          <li><strong>Global scope:</strong> The living room - everyone can access it</li>
+          <li><strong>Local scope:</strong> Your bedroom - only you can access your private stuff</li>
+          <li>You can see out from your bedroom to the living room, but people in the living room can't see into your bedroom!</li>
+        </ul>
+      </div>
+
+      <div class="code-block">
+/* ============================================
+   SCOPE EXAMPLE
+   ============================================ */
+
+// GLOBAL VARIABLE - Accessible everywhere
+let globalVar = "I am global!";
+
+function scopeDemo() {
+  // LOCAL VARIABLE - Only accessible inside this function
+  let localVar = "I am local!";
+  
+  console.log(globalVar); // ✅ Works! Can access global from inside
+  console.log(localVar);  // ✅ Works! Inside the function
+}
+
+scopeDemo();
+
+console.log(globalVar); // ✅ Works! Global is accessible everywhere
+console.log(localVar);  // ❌ ERROR! localVar doesn't exist here
+
+
+/* ============================================
+   NESTED SCOPE (Functions inside functions)
+   ============================================ */
+
+function outer() {
+  let outerVar = "I'm from outer";
+  
+  function inner() {
+    let innerVar = "I'm from inner";
+    
+    // Inner can access outer's variables
+    console.log(outerVar); // ✅ Works!
+    console.log(innerVar); // ✅ Works!
+  }
+  
+  inner();
+  console.log(outerVar); // ✅ Works!
+  console.log(innerVar); // ❌ ERROR! Can't access inner from outer
+}
+
+outer();
+      </div>
+
+      <div class="key-concept">
+        <h4>🔑 Key Rule:</h4>
+        <p><strong>Inner functions can see outer variables, but outer functions CANNOT see inner variables.</strong></p>
+        <p>It's like a one-way mirror - you can look out, but people can't look in!</p>
+      </div>
+
+      <button onclick="demoQuestion2()">▶️ Run Demo</button>
+      <div id="output2" class="demo-output"></div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- QUESTION 3: Closures -->
+    <!-- ============================================ -->
+    <div class="question-card">
+      <h2>Question 3️⃣: What are Closures? (Most Important!)</h2>
+      
+      <div class="question">
+        💬 Interviewer: "Explain closures and show me a practical example."
+      </div>
+
+      <div class="explanation">
+        <strong>Answer:</strong> A closure is when an inner function "remembers" variables from its outer function, 
+        even AFTER the outer function has finished running. It's like giving the inner function a backpack 
+        with the outer variables inside!
+      </div>
+
+      <div class="analogy">
+        <strong>🎒 Real-world analogy:</strong> Imagine you go to college (outer function). While there, 
+        you make friends and learn skills (variables). When you graduate and leave college (outer function ends), 
+        you still REMEMBER your friends and skills (closure). The memories come with you wherever you go!
+      </div>
+
+      <div class="code-block">
+/* ============================================
+   CLOSURE EXAMPLE 1: Simple Counter
+   ============================================ */
+
+function createCounter() {
+  // This variable is "private" - only accessible through the returned function
+  let count = 0;
+  
+  // Return an inner function
+  return function() {
+    count++; // This remembers 'count' even after createCounter finishes!
+    return count;
+  };
+}
+
+// Create a counter
+let counter = createCounter();
+
+// Each time we call it, it remembers the count!
+console.log(counter()); // Output: 1
+console.log(counter()); // Output: 2
+console.log(counter()); // Output: 3
+
+// count variable is NOT accessible directly
+console.log(count); // ❌ ERROR! count is private
+
+
+/* ============================================
+   CLOSURE EXAMPLE 2: Personalized Greeting
+   ============================================ */
+
+function makeGreeting(greeting) {
+  // 'greeting' is captured by the closure
+  
+  return function(name) {
+    // This function remembers 'greeting' from outer function
+    return greeting + ", " + name + "!";
+  };
+}
+
+// Create different greeting functions
+let sayHello = makeGreeting("Hello");
+let sayHi = makeGreeting("Hi");
+
+console.log(sayHello("Alice")); // Output: "Hello, Alice!"
+console.log(sayHi("Bob"));      // Output: "Hi, Bob!"
+
+// Each closure has its own 'greeting' value!
+
+
+/* ============================================
+   CLOSURE EXAMPLE 3: Private Variables
+   ============================================ */
+
+function createBankAccount(initialBalance) {
+  // Private variable - can't be accessed directly
+  let balance = initialBalance;
+  
+  // Return object with methods (closure!)
+  return {
+    deposit: function(amount) {
+      balance += amount;
+      return "New balance: $" + balance;
+    },
+    
+    withdraw: function(amount) {
+      if (amount > balance) {
+        return "Insufficient funds!";
+      }
+      balance -= amount;
+      return "New balance: $" + balance;
+    },
+    
+    getBalance: function() {
+      return "Current balance: $" + balance;
+    }
+  };
+}
+
+let myAccount = createBankAccount(100);
+
+console.log(myAccount.getBalance()); // "Current balance: $100"
+console.log(myAccount.deposit(50));  // "New balance: $150"
+console.log(myAccount.withdraw(30)); // "New balance: $120"
+
+// Can't access balance directly (it's private!)
+console.log(myAccount.balance); // undefined
+      </div>
+
+      <div class="key-concept">
+        <h4>🔑 Why Closures Matter:</h4>
+        <ul style="padding-left: 20px; margin: 10px 0;">
+          <li><strong>Data Privacy:</strong> Keep variables private (encapsulation)</li>
+          <li><strong>Memory:</strong> Functions remember their environment</li>
+          <li><strong>Factory Functions:</strong> Create multiple instances with their own data</li>
+        </ul>
+      </div>
+
+      <button onclick="demoQuestion3()">▶️ Run Counter Demo</button>
+      <div id="output3" class="demo-output"></div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- QUESTION 4: IIFE -->
+    <!-- ============================================ -->
+    <div class="question-card">
+      <h2>Question 4️⃣: What is an IIFE?</h2>
+      
+      <div class="question">
+        💬 Interviewer: "What is an IIFE and why would you use it?"
+      </div>
+
+      <div class="explanation">
+        <strong>Answer:</strong> IIFE stands for "Immediately Invoked Function Expression". 
+        It's a function that runs as soon as it's defined. You create it and execute it in one step!
+      </div>
+
+      <div class="analogy">
+        <strong>🚀 Real-world analogy:</strong> An IIFE is like a self-destructing message. 
+        You write it, it does its job immediately, and then it's gone - no trace left behind. 
+        Perfect for one-time tasks!
+      </div>
+
+      <div class="code-block">
+/* ============================================
+   IIFE SYNTAX
+   ============================================ */
+
+// Regular function (you call it manually)
+function regularFunction() {
+  console.log("I need to be called!");
+}
+regularFunction(); // You call it
+
+
+// IIFE (calls itself immediately)
+(function() {
+  console.log("I run immediately!");
+})(); // Notice the () at the end - it calls itself!
+
+
+/* ============================================
+   IIFE BREAKDOWN
+   ============================================ */
+
+(                    // Step 1: Wrap in parentheses
+  function() {       // Step 2: Create function
+    console.log("IIFE!");
+  }
+)                    // Step 3: Close parentheses
+();                  // Step 4: Call it immediately!
+
+
+/* ============================================
+   WHY USE IIFE?
+   1. Avoid polluting global scope
+   2. Create private variables
+   3. Run code once immediately
+   ============================================ */
+
+// Example 1: Private variables
+(function() {
+  let privateVar = "I'm private!";
+  console.log(privateVar); // Works inside
+})();
+
+console.log(privateVar); // ❌ ERROR! Not accessible outside
+
+
+// Example 2: With parameters
+(function(name) {
+  console.log("Hello, " + name + "!");
+})("World"); // Pass "World" as argument
+
+
+// Example 3: Arrow function IIFE (modern way)
+(() => {
+  console.log("Arrow IIFE!");
+})();
+
+
+/* ============================================
+   PRACTICAL USE CASE: Initialize app
+   ============================================ */
+
+(function() {
+  // This code runs once when page loads
+  let appName = "My App";
+  let version = "1.0";
+  
+  console.log(appName + " v" + version + " initialized!");
+  
+  // Setup code here...
+  // These variables are private and won't conflict with other code
+})();
+
+
+/* ============================================
+   IIFE RETURNING VALUE
+   ============================================ */
+
+let result = (function() {
+  let x = 10;
+  let y = 20;
+  return x + y; // Returns 30
+})();
+
+console.log(result); // Output: 30
+      </div>
+
+      <div class="key-concept">
+        <h4>🔑 When to Use IIFE:</h4>
+        <ul style="padding-left: 20px; margin: 10px 0;">
+          <li><strong>One-time initialization:</strong> Run setup code once</li>
+          <li><strong>Avoid global variables:</strong> Keep scope clean</li>
+          <li><strong>Module pattern:</strong> Create private/public methods</li>
+          <li><strong>Loops with closures:</strong> Capture loop variables correctly</li>
+        </ul>
+      </div>
+
+      <button onclick="demoQuestion4()">▶️ Run IIFE Demo</button>
+      <div id="output4" class="demo-output"></div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- BONUS: Common Interview Question -->
+    <!-- ============================================ -->
+    <div class="question-card">
+      <h2>Question 5️⃣: Classic Interview Problem - Loop with Closure</h2>
+      
+      <div class="question">
+        💬 Interviewer: "Why does this code print '3' three times instead of 0, 1, 2? How do you fix it?"
+      </div>
+
+      <div class="code-block">
+/* ============================================
+   THE PROBLEM (var has function scope!)
+   ============================================ */
+
+for (var i = 0; i < 3; i++) {
+  setTimeout(function() {
+    console.log(i); // What will this print?
+  }, 1000);
+}
+
+// Expected: 0, 1, 2
+// Actual: 3, 3, 3  ❌ Why?!
+
+// REASON: By the time setTimeout runs (after 1 second),
+// the loop has finished and i = 3 for all callbacks!
+
+
+/* ============================================
+   SOLUTION 1: Use 'let' (block scope)
+   ============================================ */
+
+for (let i = 0; i < 3; i++) {
+  setTimeout(function() {
+    console.log(i); // ✅ Prints: 0, 1, 2
+  }, 1000);
+}
+
+// 'let' creates a new 'i' for each iteration!
+
+
+/* ============================================
+   SOLUTION 2: Use IIFE to capture value
+   ============================================ */
+
+for (var i = 0; i < 3; i++) {
+  (function(capturedI) {
+    setTimeout(function() {
+      console.log(capturedI); // ✅ Prints: 0, 1, 2
+    }, 1000);
+  })(i); // Pass current i to IIFE
+}
+
+// IIFE creates a closure that captures the current value!
+      </div>
+
+      <div class="key-concept">
+        <h4>🔑 Key Takeaway:</h4>
+        <p><strong>var</strong> has function scope → shared across all iterations</p>
+        <p><strong>let</strong> has block scope → new variable for each iteration</p>
+        <p><strong>IIFE</strong> creates closure → captures value at that moment</p>
+      </div>
+
+      <button onclick="demoQuestion5()">▶️ Run Loop Demo</button>
+      <div id="output5" class="demo-output"></div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SUMMARY -->
+    <!-- ============================================ -->
+    <div class="question-card" style="border-left-color: #28a745;">
+      <h2>📋 Quick Summary</h2>
+      
+      <div style="background-color: white; padding: 20px; border-radius: 8px;">
+        <h3 style="color: #28a745;">Functions:</h3>
+        <p>• Reusable blocks of code</p>
+        <p>• 3 ways: declaration, expression, arrow</p>
+        
+        <h3 style="color: #28a745; margin-top: 20px;">Scope:</h3>
+        <p>• Global: accessible everywhere</p>
+        <p>• Local: only inside function</p>
+        <p>• Inner can see outer, but not vice versa</p>
+        
+        <h3 style="color: #28a745; margin-top: 20px;">Closures:</h3>
+        <p>• Inner function remembers outer variables</p>
+        <p>• Even after outer function finishes</p>
+        <p>• Creates private variables</p>
+        
+        <h3 style="color: #28a745; margin-top: 20px;">IIFE:</h3>
+        <p>• Immediately Invoked Function Expression</p>
+        <p>• Runs once immediately</p>
+        <p>• Syntax: (function() { ... })();</p>
+        <p>• Keeps global scope clean</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================================ -->
+  <!-- JAVASCRIPT DEMOS -->
+  <!-- ============================================ -->
+  <script>
+    function demoQuestion1() {
+      let output = document.getElementById("output1");
+      
+      function greet(name) {
+        return "Hello, " + name + "!";
+      }
+      
+      let sayGoodbye = function(name) {
+        return "Goodbye, " + name + "!";
+      };
+      
+      let add = (a, b) => a + b;
+      
+      output.innerHTML = `
+        <h4>Function Results:</h4>
+        <p><strong>Function Declaration:</strong> ${greet("Sarah")}</p>
+        <p><strong>Function Expression:</strong> ${sayGoodbye("John")}</p>
+        <p><strong>Arrow Function:</strong> 5 + 3 = ${add(5, 3)}</p>
+      `;
+    }
+
+    function demoQuestion2() {
+      let output = document.getElementById("output2");
+      let globalVar = "I am global!";
+      
+      function scopeDemo() {
+        let localVar = "I am local!";
+        return `
+          <p>✅ Inside function: Can access both</p>
+          <p>• Global: "${globalVar}"</p>
+          <p>• Local: "${localVar}"</p>
+        `;
+      }
+      
+      output.innerHTML = `
+        <h4>Scope Demo:</h4>
+        ${scopeDemo()}
+        <p>✅ Outside function: Can access global: "${globalVar}"</p>
+        <p>❌ Outside function: Cannot access local variable (it doesn't exist here)</p>
+      `;
+    }
+
+    function demoQuestion3() {
+      let output = document.getElementById("output3");
+      
+      function createCounter() {
+        let count = 0;
+        return function() {
+          count++;
+          return count;
+        };
+      }
+      
+      let counter = createCounter();
+      
+      output.innerHTML = `
+        <h4>Closure Counter Demo:</h4>
+        <p>First call: ${counter()}</p>
+        <p>Second call: ${counter()}</p>
+        <p>Third call: ${counter()}</p>
+        <p><em>The counter remembers its count even though createCounter finished!</em></p>
+      `;
+    }
+
+    function demoQuestion4() {
+      let output = document.getElementById("output4");
+      
+      let result = (function() {
+        let message = "IIFE executed immediately!";
+        return message;
+      })();
+      
+      let calculation = (function(a, b) {
+        return a + b;
+      })(10, 20);
+      
+      output.innerHTML = `
+        <h4>IIFE Demo:</h4>
+        <p>${result}</p>
+        <p>Calculation result: ${calculation}</p>
+        <p><em>These functions ran automatically without being called!</em></p>
+      `;
+    }
+
+    function demoQuestion5() {
+      let output = document.getElementById("output5");
+      let results = [];
+      
+      for (let i = 0; i < 3; i++) {
+        results.push(i);
+      }
+      
+      output.innerHTML = `
+        <h4>Loop with 'let' (correct behavior):</h4>
+        <p>Values captured: ${results.join(', ')}</p>
+        <p><em>'let' creates a new variable for each iteration, so each one is captured correctly!</em></p>
+      `;
+    }
+  </script>
+
+</body>
+</html>

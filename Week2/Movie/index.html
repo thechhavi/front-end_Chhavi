@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorite Movies</title>
+    
+    <style>
+        /* ============================================
+           GENERAL PAGE STYLING
+           ============================================ */
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* Blue gradient */
+            min-height: 100vh; /* Full viewport height */
+            display: flex; /* Flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            padding: 20px;
+        }
+        
+        /* ============================================
+           CONTAINER STYLING
+           ============================================ */
+        
+        .container {
+            background: white;
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        /* ============================================
+           HEADING STYLING
+           ============================================ */
+        
+        h1 {
+            color: #2c3e50; /* Dark gray */
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        /* Add a movie emoji before the heading using ::before */
+        h1::before {
+            content: "🎬 ";
+        }
+        
+        /* Add a popcorn emoji after the heading using ::after */
+        h1::after {
+            content: " 🍿";
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d; /* Gray */
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+        
+        /* ============================================
+           UNORDERED LIST STYLING
+           ============================================ */
+        
+        ul {
+            list-style: none; /* Removes default bullets */
+            padding: 0;
+            margin: 0;
+        }
+        
+        /* ELEMENT SELECTOR: Style ALL list items */
+        li {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Gray gradient */
+            padding: 20px 25px;
+            margin: 15px 0;
+            border-radius: 12px;
+            font-size: 1.2em;
+            color: #34495e; /* Dark blue-gray */
+            transition: all 0.3s ease; /* Smooth animation */
+            border-left: 5px solid #95a5a6; /* Gray left border */
+            cursor: pointer; /* Shows it's interactive */
+        }
+        
+        /* PSEUDO-CLASS: Hover effect for ALL list items */
+        li:hover {
+            transform: translateX(10px); /* Slides to the right */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #e0e5ec 0%, #b8c6db 100%);
+        }
+        
+        /* PSEUDO-ELEMENT: Add custom bullet point using ::before */
+        li::before {
+            content: "▶️ "; /* Movie play button emoji */
+            margin-right: 10px;
+            font-size: 0.9em;
+        }
+        
+        /* ============================================
+           FAVORITE MOVIE - SPECIAL STYLING
+           Using CLASS SELECTOR
+           ============================================ */
+        
+        .favorite {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); /* Pink/Red gradient */
+            color: white;
+            font-weight: bold;
+            border-left: 5px solid #e74c3c; /* Red left border */
+            position: relative; /* Needed for the badge */
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4); /* Pink shadow */
+        }
+        
+        /* PSEUDO-CLASS: Different hover for favorite */
+        .favorite:hover {
+            transform: translateX(10px) scale(1.05); /* Slides AND grows */
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.6);
+        }
+        
+        /* PSEUDO-ELEMENT: Add a badge using ::after */
+        .favorite::after {
+            content: "⭐ FAVORITE";
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: #f39c12; /* Orange */
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(243, 156, 18, 0.5);
+        }
+        
+        /* PSEUDO-ELEMENT: Different bullet for favorite using ::before */
+        .favorite::before {
+            content: "🏆 "; /* Trophy emoji */
+            font-size: 1.1em;
+        }
+        
+        /* ============================================
+           MOVIE DETAILS STYLING
+           ============================================ */
+        
+        .movie-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .movie-year {
+            font-size: 0.85em;
+            opacity: 0.8;
+            font-style: italic;
+        }
+        
+        /* PSEUDO-ELEMENT: Add parentheses around year using ::before and ::after */
+        .movie-year::before {
+            content: "(";
+        }
+        
+        .movie-year::after {
+            content: ")";
+        }
+        
+        /* ============================================
+           FOOTER NOTE
+           ============================================ */
+        
+        .note {
+            text-align: center;
+            margin-top: 30px;
+            color: #95a5a6;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        
+        <!-- Heading with ::before and ::after pseudo-elements -->
+        <h1>My Movie Collection</h1>
+        <p class="subtitle">A curated list of my all-time favorites</p>
+        
+        <!-- UNORDERED LIST -->
+        <ul>
+            
+            <!-- Regular movie items using ELEMENT SELECTOR (li) -->
+            <li>
+                <span class="movie-title">The Shawshank Redemption</span>
+                <span class="movie-year">1994</span>
+            </li>
+            
+            <li>
+                <span class="movie-title">Inception</span>
+                <span class="movie-year">2010</span>
+            </li>
+            
+            <!-- FAVORITE MOVIE using CLASS SELECTOR (.favorite) -->
+            <li class="favorite">
+                <span class="movie-title">Interstellar</span>
+                <span class="movie-year">2014</span>
+            </li>
+            
+            <li>
+                <span class="movie-title">The Dark Knight</span>
+                <span class="movie-year">2008</span>
+            </li>
+            
+            <li>
+                <span class="movie-title">Forrest Gump</span>
+                <span class="movie-year">1994</span>
+            </li>
+            
+            <li>
+                <span class="movie-title">The Matrix</span>
+                <span class="movie-year">1999</span>
+            </li>
+            
+            <li>
+                <span class="movie-title">Pulp Fiction</span>
+                <span class="movie-year">1994</span>
+            </li>
+            
+        </ul>
+        
+        <p class="note">
+            💡 Hover over the movies to see the effect! My absolute favorite is marked with a special badge.
+        </p>
+        
+    </div>
+
+</body>
+</html>
